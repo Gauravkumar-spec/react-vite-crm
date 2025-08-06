@@ -1,10 +1,6 @@
-// App.jsx - Updated with separate components
-import { useState, useEffect } from "react";
-import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
-import { EventType } from "@azure/msal-browser";
-import { MsalProvider, useMsal, useIsAuthenticated } from "@azure/msal-react";
-
-// Your existing components
+// src/App.jsx
+import { useState, useMemo } from "react";
+import { Routes, Route, useLocation } from "react-router-dom";
 import Sidebar from "./components/Sidebar";
 import Dashboard from "./pages/Dashboard";
 import Listings from "./pages/Listings";
@@ -15,102 +11,32 @@ import AgentList from "./pages/AgentList";
 import Lead from "./pages/Lead";
 import LeadList from "./pages/LeadList";
 import DarkModeToggle from "./components/DarkModeToggle";
+import Login from "./pages/Login";
 
-// New components
+import { AuthProvider, useAuth } from "./context/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
-import RedirectHandler from "./components/RedirectHandler";
 
-// Custom Navigation Client
-import { CustomNavigationClient } from "./utils/NavigationClient";
+function AppShell() {
+  const location = useLocation();
+  const { session } = useAuth();
 
-function App({ msalInstance }) {
-  return (
-    <ClientSideNavigation pca={msalInstance}>
-      <MsalProvider instance={msalInstance}>
-        <AppContent />
-      </MsalProvider>
-    </ClientSideNavigation>
+  // Hide chrome (sidebar/toggle) on login route
+  const isLoginRoute = useMemo(
+    () => location.pathname === "/login" || location.pathname === "/",
+    [location]
   );
-}
 
-/**
- * Custom navigation client to integrate MSAL with React Router
- */
-function ClientSideNavigation({ pca, children }) {
-  const navigate = useNavigate();
-  const [firstRender, setFirstRender] = useState(true);
+  // Sidebar state only relevant when authenticated
+  const [open, setOpen] = useState(false); // desktop expanded/collapsed
+  const [mobileOpen, setMobileOpen] = useState(false); // mobile open/close
 
-  useEffect(() => {
-    try {
-      const navigationClient = new CustomNavigationClient(navigate);
-      pca.setNavigationClient(navigationClient);
-      console.log("Navigation client set successfully");
-    } catch (error) {
-      console.error("Error setting navigation client:", error);
-    }
-    setFirstRender(false);
-  }, [pca, navigate]);
-
-  if (firstRender) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
-      </div>
-    );
-  }
-
-  return children;
-}
-
-function AppContent() {
-  const { instance } = useMsal();
-  const isAuthenticated = useIsAuthenticated();
-  const [open, setOpen] = useState(false);
-  const [mobileOpen, setMobileOpen] = useState(false);
-
-  // Handle MSAL events
-  useEffect(() => {
-    const callbackId = instance.addEventCallback((event) => {
-      console.log("MSAL Event:", event.eventType, event);
-      
-      if (event.eventType === EventType.LOGIN_SUCCESS && event.payload.account) {
-        console.log("Login successful, setting active account:", event.payload.account.username);
-        instance.setActiveAccount(event.payload.account);
-      }
-      
-      if (event.eventType === EventType.LOGIN_FAILURE) {
-        console.error("Login failed:", event.payload);
-      }
-      
-      if (event.eventType === EventType.LOGOUT_SUCCESS) {
-        console.log("Logout successful");
-        instance.setActiveAccount(null);
-      }
-
-      if (event.eventType === EventType.ACCOUNT_ADDED) {
-        console.log("Account added:", event.payload);
-      }
-    });
-
-    return () => {
-      if (callbackId) {
-        instance.removeEventCallback(callbackId);
-      }
-    };
-  }, [instance]);
-
-  // Set active account if not set
-  useEffect(() => {
-    const accounts = instance.getAllAccounts();
-    if (accounts.length > 0 && !instance.getActiveAccount()) {
-      console.log("Setting active account from available accounts:", accounts[0].username);
-      instance.setActiveAccount(accounts[0]);
-    }
-  }, [instance]);
+  // Tailwind: choose between fixed class names (no template in class)
+  const marginClass = open ? "lg:ml-64" : "lg:ml-20";
 
   return (
     <div className="bg-gray-100 dark:bg-gray-900 text-black dark:text-white min-h-screen flex">
-      {isAuthenticated && (
+      {/* Sidebar only when authed and not on login */}
+      {session?.idToken && !isLoginRoute && (
         <Sidebar
           open={open}
           setOpen={setOpen}
@@ -119,94 +45,108 @@ function AppContent() {
         />
       )}
 
+      {/* Main content area */}
       <div
-        className={`
-          flex-1 transition-all duration-300
-          ${isAuthenticated ? (open ? 'ml-64' : 'ml-20') : 'ml-0'}
-        `}
+        className={[
+          "flex-1 transition-[margin] duration-300 ml-20",
+          session?.idToken && !isLoginRoute ? marginClass : "lg:ml-0",
+        ].join(" ")}
+        // inline fallback for browsers without Tailwind (optional)
+        style={{
+          marginLeft:
+            session?.idToken && !isLoginRoute ? (open ? "16rem" : "5rem") : 0,
+        }}
       >
-        {isAuthenticated && (
+        {session?.idToken && !isLoginRoute && (
           <div className="flex justify-end p-4">
             <DarkModeToggle />
           </div>
         )}
 
+        {/* While auth status is resolving, you can render a splash (optional) */}
+        {/* {loading && <div className="p-6">Checking session…</div>} */}
+
         <Routes>
-          {/* Public route for redirect handling */}
-          <Route path="/redirect" element={<RedirectHandler />} />
-          
+          {/* Public route(s) */}
+          <Route path="/" element={<Login />} />
+          <Route path="/login" element={<Login />} />
+
           {/* Protected routes */}
-          <Route 
-            path="/" 
+          <Route
+            path="/dashboard"
             element={
               <ProtectedRoute>
                 <Dashboard />
               </ProtectedRoute>
-            } 
+            }
           />
-          <Route 
-            path="/listings" 
+          <Route
+            path="/listings"
             element={
               <ProtectedRoute>
                 <Listings />
               </ProtectedRoute>
-            } 
+            }
           />
-          <Route 
-            path="/settings" 
+          <Route
+            path="/settings"
             element={
               <ProtectedRoute>
                 <Settings />
               </ProtectedRoute>
-            } 
+            }
           />
-          <Route 
-            path="/listinglist" 
+          <Route
+            path="/listinglist"
             element={
               <ProtectedRoute>
                 <ListingList />
               </ProtectedRoute>
-            } 
+            }
           />
-          <Route 
-            path="/agent" 
+          <Route
+            path="/agent"
             element={
               <ProtectedRoute>
                 <Agents />
               </ProtectedRoute>
-            } 
+            }
           />
-          <Route 
-            path="/agentlist" 
+          <Route
+            path="/agentlist"
             element={
               <ProtectedRoute>
                 <AgentList />
               </ProtectedRoute>
-            } 
+            }
           />
-          <Route 
-            path="/lead" 
+          <Route
+            path="/lead"
             element={
               <ProtectedRoute>
                 <Lead />
               </ProtectedRoute>
-            } 
+            }
           />
-          <Route 
-            path="/leadlist" 
+          <Route
+            path="/leadlist"
             element={
               <ProtectedRoute>
                 <LeadList />
               </ProtectedRoute>
-            } 
+            }
           />
-          
-          {/* Fallback */}
-          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </div>
     </div>
   );
 }
 
-export default App;
+export default function App() {
+  // If you already wrap <AuthProvider> in main.jsx, keep only <AppShell /> here.
+  return (
+    <AuthProvider>
+      <AppShell />
+    </AuthProvider>
+  );
+}
