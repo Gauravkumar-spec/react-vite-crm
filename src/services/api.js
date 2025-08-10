@@ -6,6 +6,7 @@ export const baseQuery = fetchBaseQuery({
     const token = sessionStorage.getItem("token");
     if (token) {
       headers.set("Authorization", `Bearer ${token}`);
+      headers.set("Content_Type", `application/json`);
     }
     return headers;
   },

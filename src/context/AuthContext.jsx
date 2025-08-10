@@ -1,20 +1,120 @@
-// src/context/AuthContext.jsx
-import React, { createContext, useContext, useEffect, useMemo, useState } from "react";
+import React, { createContext, useContext, useEffect, useMemo, useState, useRef } from "react";
 import axios from "axios";
-import { getSession, refreshSession } from "../services/Auth";
+import { getSession, refreshSession, isTokenExpired, isTokenExpiringSoon } from "../services/Auth";
 
 const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
   const [session, setSession] = useState(null);
   const [loading, setLoading] = useState(true);
+  const refreshPromise = useRef(null);
 
-  // Load session on mount
+  // Single refresh function - prevents multiple simultaneous calls
+  const refreshToken = async () => {
+    const sessionId = session?.sessionId || sessionStorage.getItem("sessionId");
+    if (!sessionId) return null;
+
+    // Return existing refresh promise if already refreshing
+    if (refreshPromise.current) {
+      return refreshPromise.current;
+    }
+
+    refreshPromise.current = (async () => {
+      try {
+        console.log("[Auth] Refreshing token...");
+        const data = await refreshSession(sessionId);
+        
+        // Update session and storage
+        setSession(prev => ({ ...(prev || {}), ...data, sessionId }));
+        if (data?.accessToken) {
+          sessionStorage.setItem("token", data.accessToken);
+        }
+        
+        return data;
+      } catch (error) {
+        console.error("[Auth] Refresh failed:", error);
+        
+        // If 401, session is completely expired
+        if (error.response?.status === 401) {
+          handleLogout();
+        }
+        throw error;
+      } finally {
+        refreshPromise.current = null;
+      }
+    })();
+
+    return refreshPromise.current;
+  };
+
+  // Setup axios interceptors (the magic happens here!)
   useEffect(() => {
-    const sessionIdFromUrl =
-      new URLSearchParams(window.location.search).get("sessionId");
-    const stored = sessionStorage.getItem("sessionId");
-    const sessionId = sessionIdFromUrl || stored;
+    // REQUEST INTERCEPTOR - Add token and proactive refresh
+    const requestInterceptor = axios.interceptors.request.use(
+      async (config) => {
+        const token = sessionStorage.getItem("token");
+        
+        // Add token to request
+        if (token && !isTokenExpired(token)) {
+          config.headers.Authorization = `Bearer ${token}`;
+        }
+
+        // Proactive refresh if token expiring soon
+        if (token && isTokenExpiringSoon(token) && !refreshPromise.current) {
+          try {
+            await refreshToken();
+            const newToken = sessionStorage.getItem("token");
+            if (newToken) {
+              config.headers.Authorization = `Bearer ${newToken}`;
+            }
+          } catch (error) {
+            console.error("[Auth] Proactive refresh failed:", error);
+          }
+        }
+
+        return config;
+      },
+      (error) => Promise.reject(error)
+    );
+
+    // RESPONSE INTERCEPTOR - Handle 401 errors
+    const responseInterceptor = axios.interceptors.response.use(
+      (response) => response,
+      async (error) => {
+        const originalRequest = error.config;
+
+        // Handle 401 errors with automatic retry
+        if (error.response?.status === 401 && !originalRequest._retry) {
+          originalRequest._retry = true;
+
+          try {
+            await refreshToken();
+            const newToken = sessionStorage.getItem("token");
+            if (newToken && !isTokenExpired(newToken)) {
+              originalRequest.headers.Authorization = `Bearer ${newToken}`;
+              return axios(originalRequest);
+            }
+          } catch (refreshError) {
+            console.error("[Auth] Token refresh on 401 failed:", refreshError);
+          }
+        }
+
+        return Promise.reject(error);
+      }
+    );
+
+    // Cleanup interceptors
+    return () => {
+      axios.interceptors.request.eject(requestInterceptor);
+      axios.interceptors.response.eject(responseInterceptor);
+    };
+  }, [session?.sessionId]);
+
+  // Load initial session
+  useEffect(() => {
+    const sessionIdFromUrl = new URLSearchParams(window.location.search).get("sessionId");
+    const storedSessionId = sessionStorage.getItem("sessionId");
+    const sessionId = sessionIdFromUrl || storedSessionId;
 
     if (!sessionId) {
       setLoading(false);
@@ -27,70 +127,41 @@ export const AuthProvider = ({ children }) => {
         sessionStorage.setItem("sessionId", sessionId);
         sessionStorage.setItem("token", data?.accessToken);
         setSession({ ...data, sessionId });
-      } catch {
+      } catch (error) {
+        console.error("[Auth] Session load failed:", error);
+        sessionStorage.clear();
         setSession(null);
-        sessionStorage.removeItem("sessionId");
       } finally {
         setLoading(false);
       }
     })();
   }, []);
 
-  // Refresh token
-  const refreshToken = async () => {
-    const currentId = session?.sessionId || sessionStorage.getItem("sessionId");
-    if (!currentId) return null;
-
-    try {
-      const data = await refreshSession(currentId);
-      setSession(prev => ({ ...(prev || {}), ...data, sessionId: currentId }));
-      return data;
-    } catch (error) {
-      console.error("[Frontend] Token refresh failed:", error);
-      if (error.response?.status === 401) {
-        console.warn("[Frontend] Session expired during refresh. Logging out...");
-        await handleLogout();
-      }
-      return null;
-    }
+  // Logout function
+  const handleLogout = () => {
+    setSession(null);
+    sessionStorage.clear();
+    refreshPromise.current = null;
+    console.log("[Auth] Logged out");
   };
 
-  // Auto-refresh before expiry
-  useEffect(() => {
-    if (!session?.sessionId) return;
-
-    const REFRESH_INTERVAL = 50 * 60 * 1000; // 50 minutes
-    const id = setInterval(() => {
-      refreshToken();
-    }, REFRESH_INTERVAL);
-
-    return () => clearInterval(id);
+  // Check if authenticated
+  const isAuthenticated = useMemo(() => {
+    if (!session?.sessionId) return false;
+    const token = sessionStorage.getItem("token");
+    return token && !isTokenExpired(token);
   }, [session?.sessionId]);
 
-  // Logout
-  const handleLogout = async () => {
-    const currentId = session?.sessionId || sessionStorage.getItem("sessionId");
-    if (!currentId) {
-      setSession(null);
-      sessionStorage.clear();
-      return;
-    }
-
-    try {
-      await axios.get(`/api/AuthLogout?sessionId=${currentId}`);
-    } catch (error) {
-      console.error("[Frontend] Logout failed:", error);
-    } finally {
-      setSession(null);
-      setTimeout(() => {
-        sessionStorage.clear();
-      }, 500);
-    }
-  };
-
   const value = useMemo(
-    () => ({ session, loading, refreshToken, setSession, handleLogout }),
-    [session, loading]
+    () => ({
+      session,
+      loading,
+      isAuthenticated,
+      refreshToken,
+      handleLogout,
+      isRefreshing: !!refreshPromise.current
+    }),
+    [session, loading, isAuthenticated]
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
@@ -98,6 +169,6 @@ export const AuthProvider = ({ children }) => {
 
 export const useAuth = () => {
   const ctx = useContext(AuthContext);
-  if (ctx === null) throw new Error("useAuth must be used within an AuthProvider");
+  if (!ctx) throw new Error("useAuth must be used within AuthProvider");
   return ctx;
 };

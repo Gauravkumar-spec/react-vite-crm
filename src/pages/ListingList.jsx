@@ -71,6 +71,7 @@ function ListingList() {
       };
       const res = await propertySearch(data).unwrap()
       console.log(res,"res")
+      setListings(res)
     } catch (err) {
       setError("Failed to load listings. Please try again later.");
       console.error("Error fetching listings:", err);
@@ -308,7 +309,7 @@ function ListingList() {
 
       {/* Listings Table */}
       <div className="bg-gray-800 rounded-lg shadow overflow-hidden">
-        {listings.length === 0 ? (
+        {listings?.data?.length === 0 ? (
           <div className="text-center py-8">
             No listings found. Try adjusting your search or filters.
           </div>
@@ -324,9 +325,9 @@ function ListingList() {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-700">
-              {listings.map((listing) => (
+              {listings?.data?.map((listing) => (
                 <tr
-                  key={listing._id}
+                  key={listing?.property_id}
                   className="hover:bg-gray-700 transition-colors"
                 >
                   <td className="px-6 py-4">
@@ -339,18 +340,18 @@ function ListingList() {
                         />
                       )}
                       <div>
-                        <div className="font-medium">{listing.title}</div>
+                        <div className="font-medium">{listing?.title}</div>
                         <div className="text-sm text-gray-400 flex items-center">
-                          <FiMapPin className="mr-1" /> {listing.location}
+                          <FiMapPin className="mr-1" /> {listing?.location}
                         </div>
                       </div>
                     </div>
                   </td>
                   <td className="px-6 py-4">
                     <div className="text-sm">
-                      <div className="capitalize">{listing.propertyType}</div>
+                      <div className="capitalize">{listing?.property_type}</div>
                       <div className="capitalize text-gray-400">
-                        {listing.listingType}
+                        {listing?.property_type}
                       </div>
                       <div className="flex items-center mt-2 space-x-4 text-gray-400">
                         <span className="flex items-center">
@@ -384,29 +385,29 @@ function ListingList() {
                     </div>
                   </td>
                   <td className="px-6 py-4 font-medium">
-                    {formatPrice(listing.price)}
-                    {listing.listingType === "rent" && (
+                    {formatPrice(listing?.price)}
+                    {listing?.property_id === "rent" && (
                       <span className="text-gray-400 text-sm"> /mo</span>
                     )}
                   </td>
                   <td className="px-6 py-4 text-right">
                     <div className="flex justify-end space-x-2">
                       <button
-                        onClick={() => handleView(listing._id)}
+                        onClick={() => handleView(listing?.property_id)}
                         className="text-indigo-400 hover:text-indigo-300 transition-colors"
                         title="View"
                       >
                         <FiEye />
                       </button>
                       <button
-                        onClick={() => handleEdit(listing._id)}
+                        onClick={() => handleEdit(listing?.property_id)}
                         className="text-yellow-400 hover:text-yellow-300 transition-colors"
                         title="Edit"
                       >
                         <FiEdit2 />
                       </button>
                       <button
-                        onClick={() => handleDelete(listing._id)}
+                        onClick={() => handleDelete(listing?.property_id)}
                         className="text-red-400 hover:text-red-300 transition-colors"
                         title="Delete"
                       >
@@ -422,7 +423,7 @@ function ListingList() {
       </div>
 
       {/* Pagination */}
-      {listings.length > 0 && (
+      {listings?.data?.length > 0 && (
         <div className="mt-4 flex justify-between items-center">
           <button
             onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
