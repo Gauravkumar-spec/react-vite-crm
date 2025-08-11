@@ -952,7 +952,7 @@ import { useNavigate } from 'react-router-dom';
 import { 
   FiUpload, FiX, FiPlus, FiImage, FiVideo, 
   FiCheckCircle, FiHome, FiDollarSign, FiMapPin, 
-  FiLayers, FiGrid, FiCheck, FiTrash2
+  FiLayers, FiGrid, FiCheck, FiTrash2, FiUser, FiMail, FiPhone
 } from 'react-icons/fi';
 import axios from 'axios';
 
@@ -968,16 +968,34 @@ function PropertyListingForm() {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    propertyType: '',
-    listingType: '',
-    title: '',
+    property_type: 'Flat',
+    property_category: 'Sale',
+    title: 'DLF Phase 5 Floor',
     location: '',
-    price: '',
+    price: '10500000',
     bedrooms: '',
     bathrooms: '',
-    area: '',
+    size_sqft: 1500,
+    bhk:'3',
+    floors:'10',
+    facing:'East',
+    maintenance: '10000',
+    expected_value: 'null',
     description: '',
-    features: []
+    furnishing:'Furnished',
+    features: [],
+    agent_email: "agent1@example.com",
+    builder: "DLF Builder",
+    description: "Spacious flat with amenities",
+    contactName: '',
+    contactEmail: '',
+    contactPhone: '',
+    contactType: 'Owner', // Owner or Agent
+    availability: 'Available', // Availability options
+    images: ["url1.jpg", "url2.jpg"],
+    video: "https://youtube.com/demo",
+    facilities: ["School", "Metro", "Market"]
+
   });
 
   const [images, setImages] = useState([]);
@@ -1065,20 +1083,20 @@ function PropertyListingForm() {
       <div className="max-w-5xl mx-auto">
         {/* Progress Steps */}
         <div className="flex justify-between mb-12 relative">
-          {[1, 2, 3].map((step) => (
+          {[1, 2, 3, 4].map((step) => (
             <div key={step} className="flex flex-col items-center z-10">
               <div className={`w-10 h-10 rounded-full flex items-center justify-center ${currentStep >= step ? 'bg-indigo-600 text-white' : 'bg-gray-800 border-2 border-gray-600 text-gray-400'}`}>
                 {currentStep > step ? <FiCheck size={18} /> : step}
               </div>
               <span className={`mt-2 text-sm font-medium ${currentStep >= step ? 'text-indigo-400' : 'text-gray-500'}`}>
-                {step === 1 ? 'Details' : step === 2 ? 'Media' : 'Review'}
+                {step === 1 ? 'Details' : step === 2 ? 'Media' : step === 3 ? 'Contact' : 'Review'}
               </span>
             </div>
           ))}
           <div className="absolute top-5 left-0 right-0 h-1 bg-gray-700 -z-1">
             <div 
               className="h-full bg-indigo-600 transition-all duration-300" 
-              style={{ width: `${(currentStep - 1) * 50}%` }}
+              style={{ width: `${(currentStep - 1) * 33.33}%` }}
             ></div>
           </div>
         </div>
@@ -1402,14 +1420,149 @@ function PropertyListingForm() {
                     onClick={nextStep}
                     className="px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors flex items-center"
                   >
+                    Next: Contact Info <FiUser className="ml-2" />
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {/* Step 3: Contact Information */}
+            {currentStep === 3 && (
+              <div className="p-8">
+                <h2 className="text-2xl font-bold text-gray-100 mb-6">Contact Information</h2>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {/* Contact Type */}
+                  <div className="space-y-2 md:col-span-2">
+                    <label className="block text-sm font-medium text-gray-300">You are</label>
+                    <div className="flex gap-4 mt-2">
+                      <label className="inline-flex items-center">
+                        <input
+                          type="radio"
+                          name="contactType"
+                          value="Owner"
+                          checked={formData.contactType === 'Owner'}
+                          onChange={handleChange}
+                          className="h-4 w-4 text-indigo-600 border-gray-600 bg-gray-700"
+                        />
+                        <span className="ml-2 text-gray-300">Property Owner</span>
+                      </label>
+                      <label className="inline-flex items-center">
+                        <input
+                          type="radio"
+                          name="contactType"
+                          value="Agent"
+                          checked={formData.contactType === 'Agent'}
+                          onChange={handleChange}
+                          className="h-4 w-4 text-indigo-600 border-gray-600 bg-gray-700"
+                        />
+                        <span className="ml-2 text-gray-300">Real Estate Agent</span>
+                      </label>
+                    </div>
+                  </div>
+
+                  {/* Contact Name */}
+                  <div className="space-y-2">
+                    <label className="block text-sm font-medium text-gray-300 flex items-center">
+                      <FiUser className="mr-2" /> Contact Name
+                    </label>
+                    <input
+                      type="text"
+                      name="contactName"
+                      value={formData.contactName}
+                      onChange={handleChange}
+                      required
+                      className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-100"
+                      placeholder="John Doe"
+                    />
+                  </div>
+
+                  {/* Contact Email */}
+                  <div className="space-y-2">
+                    <label className="block text-sm font-medium text-gray-300 flex items-center">
+                      <FiMail className="mr-2" /> Email
+                    </label>
+                    <input
+                      type="email"
+                      name="contactEmail"
+                      value={formData.contactEmail}
+                      onChange={handleChange}
+                      required
+                      className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-100"
+                      placeholder="john@example.com"
+                    />
+                  </div>
+
+                  {/* Contact Phone */}
+                  <div className="space-y-2">
+                    <label className="block text-sm font-medium text-gray-300 flex items-center">
+                      <FiPhone className="mr-2" /> Phone Number
+                    </label>
+                    <input
+                      type="tel"
+                      name="contactPhone"
+                      value={formData.contactPhone}
+                      onChange={handleChange}
+                      required
+                      className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-100"
+                      placeholder="+91 9876543210"
+                    />
+                  </div>
+
+                  {/* Availability */}
+                  <div className="space-y-2 md:col-span-2">
+                    <label className="block text-sm font-medium text-gray-300">Availability for Viewings</label>
+                    <select
+                      name="availability"
+                      value={formData.availability}
+                      onChange={handleChange}
+                      className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-100"
+                    >
+                      <option value="Any time">Any time</option>
+                      <option value="Weekdays">Weekdays</option>
+                      <option value="Weekends">Weekends</option>
+                      <option value="Morning">Morning (9AM-12PM)</option>
+                      <option value="Afternoon">Afternoon (12PM-5PM)</option>
+                      <option value="Evening">Evening (5PM-8PM)</option>
+                      <option value="By appointment">By appointment only</option>
+                    </select>
+                  </div>
+
+                  {/* Additional Contact Info */}
+                  <div className="space-y-2 md:col-span-2">
+                    <label className="block text-sm font-medium text-gray-300">Additional Contact Information (Optional)</label>
+                    <textarea
+                      name="additionalContactInfo"
+                      value={formData.additionalContactInfo || ''}
+                      onChange={handleChange}
+                      rows={3}
+                      className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-100"
+                      placeholder="Any additional contact methods or information for potential buyers/renters"
+                    />
+                  </div>
+                </div>
+
+                <div className="mt-8 flex justify-between">
+                  <button
+                    type="button"
+                    onClick={prevStep}
+                    className="px-6 py-3 border border-gray-600 text-gray-300 rounded-lg hover:bg-gray-700 transition-colors"
+                  >
+                    Back
+                  </button>
+                  <button
+                    type="button"
+                    onClick={nextStep}
+                    className="px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors flex items-center"
+                  >
                     Next: Review & Submit <FiCheck className="ml-2" />
                   </button>
                 </div>
               </div>
             )}
 
-            {/* Step 3: Review & Submit */}
-            {currentStep === 3 && (
+            {/* Step 4: Review & Submit */}
+            {currentStep === 4 && (
               <div className="p-8">
                 <h2 className="text-2xl font-bold text-gray-100 mb-6">Review Your Listing</h2>
                 
@@ -1461,7 +1614,7 @@ function PropertyListingForm() {
                     </div>
                   </div>
 
-                  {/* Features & Media Summary */}
+                  {/* Features & Media & Contact Summary */}
                   <div>
                     <div className="mb-8">
                       <h3 className="text-lg font-semibold text-gray-100 mb-4 pb-2 border-b border-gray-700">Features</h3>
@@ -1478,7 +1631,7 @@ function PropertyListingForm() {
                       )}
                     </div>
 
-                    <div>
+                    <div className="mb-8">
                       <h3 className="text-lg font-semibold text-gray-100 mb-4 pb-2 border-b border-gray-700">Media</h3>
                       <div className="mb-4">
                         <p className="text-sm text-gray-400 mb-2">Images ({images.length})</p>
@@ -1512,6 +1665,32 @@ function PropertyListingForm() {
                         ) : (
                           <p className="text-gray-500">No video added</p>
                         )}
+                      </div>
+                    </div>
+
+                    <div>
+                      <h3 className="text-lg font-semibold text-gray-100 mb-4 pb-2 border-b border-gray-700">Contact Information</h3>
+                      <div className="space-y-4">
+                        <div>
+                          <p className="text-sm text-gray-400">Contact Type</p>
+                          <p className="font-medium text-gray-200">{formData.contactType || 'Not specified'}</p>
+                        </div>
+                        <div>
+                          <p className="text-sm text-gray-400">Contact Name</p>
+                          <p className="font-medium text-gray-200">{formData.contactName || 'Not specified'}</p>
+                        </div>
+                        <div>
+                          <p className="text-sm text-gray-400">Email</p>
+                          <p className="font-medium text-gray-200">{formData.contactEmail || 'Not specified'}</p>
+                        </div>
+                        <div>
+                          <p className="text-sm text-gray-400">Phone</p>
+                          <p className="font-medium text-gray-200">{formData.contactPhone || 'Not specified'}</p>
+                        </div>
+                        <div>
+                          <p className="text-sm text-gray-400">Availability</p>
+                          <p className="font-medium text-gray-200">{formData.availability || 'Not specified'}</p>
+                        </div>
                       </div>
                     </div>
                   </div>

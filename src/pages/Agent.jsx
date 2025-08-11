@@ -3,21 +3,17 @@ import axios from 'axios';
 
 function Agent() {
   // Form state
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    specialty: '',
-    experience: '',
-    bio: '',
-    languages: [],
-    licenseNumber: '',
-    socialMedia: {
-      facebook: '',
-      linkedin: '',
-      instagram: ''
-    }
-  });
+const [formData, setFormData] = useState({
+  name: 'Apurva',
+  email: 'appu@example.com',
+  mobile: '8876543210',
+  address: '123 MG Road',
+  city: 'Gurgaon',
+  area: 'DLF Phase 3',
+  profile_photo_url: 'https://cdn.site.com/agent-photo.jpg',
+  permissions:["manage_listings", "manage_leads", "update_status"] // optional if shown in UI
+});
+
   
   const [image, setImage] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);

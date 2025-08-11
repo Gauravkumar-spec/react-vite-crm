@@ -1,59 +1,152 @@
-import { useState } from "react";
+// src/App.jsx
+import { useState, useMemo } from "react";
+import { Routes, Route, useLocation } from "react-router-dom";
 import Sidebar from "./components/Sidebar";
 import Dashboard from "./pages/Dashboard";
 import Listings from "./pages/Listings";
-import { Routes, Route } from 'react-router-dom';
-import Settings from './pages/Settings';
+import Settings from "./pages/Settings";
 import ListingList from "./pages/ListingList";
 import Agents from "./pages/Agent";
 import AgentList from "./pages/AgentList";
 import Lead from "./pages/Lead";
 import LeadList from "./pages/LeadList";
 import DarkModeToggle from "./components/DarkModeToggle";
+import Login from "./pages/Login";
 
-function App() {
-  // Lift sidebar open state here:
-  const [open, setOpen] = useState(false);          // desktop sidebar expanded/collapsed
-  const [mobileOpen, setMobileOpen] = useState(false);  // mobile sidebar open/close
+import { AuthProvider, useAuth } from "./context/AuthContext";
+import ProtectedRoute from "./components/ProtectedRoute";
+
+function AppShell() {
+  const location = useLocation();
+  const { session } = useAuth();
+
+  // Hide chrome (sidebar/toggle) on login route
+  const isLoginRoute = useMemo(
+    () => location.pathname === "/login" || location.pathname === "/",
+    [location]
+  );
+
+  // Sidebar state only relevant when authenticated
+  const [open, setOpen] = useState(false); // desktop expanded/collapsed
+  const [mobileOpen, setMobileOpen] = useState(false); // mobile open/close
+
+  // Tailwind: choose between fixed class names (no template in class)
+  const marginClass = open ? "lg:ml-64" : "lg:ml-20";
 
   return (
     <div className="bg-gray-100 dark:bg-gray-900 text-black dark:text-white min-h-screen flex">
-      
-      {/* Sidebar with state passed as props */}
-      <Sidebar
-        open={open}
-        setOpen={setOpen}
-        mobileOpen={mobileOpen}
-        setMobileOpen={setMobileOpen}
-      />
+      {/* Sidebar only when authed and not on login */}
+      {session?.idToken && !isLoginRoute && (
+        <Sidebar
+          open={open}
+          setOpen={setOpen}
+          mobileOpen={mobileOpen}
+          setMobileOpen={setMobileOpen}
+        />
+      )}
 
       {/* Main content area */}
       <div
-        className={`
-          flex-1
-          transition-margin duration-300
-          ml-20 lg:ml-${open ? "64" : "20"}  /* dynamic margin on large screens */
-          `}
+        className={[
+          "flex-1 transition-[margin] duration-300 ml-20",
+          session?.idToken && !isLoginRoute ? marginClass : "lg:ml-0",
+        ].join(" ")}
+        // inline fallback for browsers without Tailwind (optional)
         style={{
-          marginLeft: open ? "16rem" : "5rem", // fallback inline style for margin-left (16rem or 5rem)
+          marginLeft:
+            session?.idToken && !isLoginRoute ? (open ? "16rem" : "5rem") : 0,
         }}
       >
-        <div className="flex justify-end p-4">
-          <DarkModeToggle />
-        </div>
+        {session?.idToken && !isLoginRoute && (
+          <div className="flex justify-end p-4">
+            <DarkModeToggle />
+          </div>
+        )}
+
+        {/* While auth status is resolving, you can render a splash (optional) */}
+        {/* {loading && <div className="p-6">Checking session…</div>} */}
+
         <Routes>
-          <Route path="/" element={<Dashboard />} />
-          <Route path="/listings" element={<Listings />} />
-          <Route path="/settings" element={<Settings />} />
-          <Route path="/listinglist" element={<ListingList />} />
-          <Route path="/agent" element={<Agents />} />
-          <Route path="/agentlist" element={<AgentList />} />
-          <Route path="/lead" element={<Lead />} />
-          <Route path="/leadlist" element={<LeadList />} />
+          {/* Public route(s) */}
+          <Route path="/" element={<Login />} />
+          <Route path="/login" element={<Login />} />
+
+          {/* Protected routes */}
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/listings"
+            element={
+              <ProtectedRoute>
+                <Listings />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/settings"
+            element={
+              <ProtectedRoute>
+                <Settings />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/listinglist"
+            element={
+              <ProtectedRoute>
+                <ListingList />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/agent"
+            element={
+              <ProtectedRoute>
+                <Agents />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/agentlist"
+            element={
+              <ProtectedRoute>
+                <AgentList />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/lead"
+            element={
+              <ProtectedRoute>
+                <Lead />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/leadlist"
+            element={
+              <ProtectedRoute>
+                <LeadList />
+              </ProtectedRoute>
+            }
+          />
         </Routes>
       </div>
     </div>
   );
 }
 
-export default App;
+export default function App() {
+  // If you already wrap <AuthProvider> in main.jsx, keep only <AppShell /> here.
+  return (
+    <AuthProvider>
+      <AppShell />
+    </AuthProvider>
+  );
+}
