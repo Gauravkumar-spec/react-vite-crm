@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import {
   FiUser,
@@ -18,23 +18,15 @@ import { ErrorMessage, Field, Form, Formik } from "formik";
 import { leadValidationSchema } from "../utils/validationSchemas/leadSchema";
 import { useSetLeadMutation } from "../services/leadApi";
 import { useNavigate } from "react-router-dom";
+import { useDataTableMutation } from "../services/tableApi";
 
 const Leads = () => {
   const [setLead] = useSetLeadMutation();
+  const [dataTable] = useDataTableMutation();
   const navigate = useNavigate();
-  // const [lead, setLead] = useState({
-  //   name: "",
-  //   mobile: "",
-  //   email: "",
-  //   requirement: "",
-  //   budgetMin: "",
-  //   budgetMax: "",
-  //   location: "",
-  //   propertyType: "",
-  //   followUpDate: "",
-  //   source: "",
-  //   notes: "",
-  // });
+  const [propertyType, setPropertyType] = useState([]);
+  const [leadSource, setLeadSource] = useState([]);
+  const [isLoadingDropdowns, setIsLoadingDropdowns] = useState(true);
 
   const initialValues = {
     name: "",
@@ -50,11 +42,46 @@ const Leads = () => {
     notes: "",
   };
 
-  // const [isSubmitting, setIsSubmitting] = useState(false);
+  useEffect(() => {
+    const fetchDropDownData = async () => {
+      try {
+        setIsLoadingDropdowns(true);
+        const propertyRes = await dataTable({
+          table_name: "PropertyType",
+        }).unwrap();
+        const leadSourceRes = await dataTable({
+          table_name: "LeadSource",
+        }).unwrap();
+        setPropertyType(propertyRes?.data || propertyRes || []);
+        setLeadSource(leadSourceRes?.data || leadSourceRes || []);
+      } catch (error) {
+        console.error("Error fetching dropdown data:", error);
+        toast.error("Failed to load dropdown options", {
+          position: "top-center",
+          autoClose: 3000,
+          theme: "dark",
+        });
 
-  // const handleChange = (e) => {
-  //   setLead({ ...lead, [e.target.name]: e.target.value });
-  // };
+        setPropertyType([
+          { id: 1, name: "Residential" },
+          { id: 2, name: "Commercial" },
+          { id: 3, name: "Land" },
+          { id: 4, name: "Industrial" },
+        ]);
+
+        setLeadSource([
+          { id: 1, name: "Website" },
+          { id: 2, name: "Referral" },
+          { id: 3, name: "Walk-in" },
+          { id: 4, name: "Social Media" },
+          { id: 5, name: "Advertisement" },
+        ]);
+      } finally {
+        setIsLoadingDropdowns(false);
+      }
+    };
+    fetchDropDownData();
+  }, [dataTable]);
 
   const handleSubmit = async (values, { resetForm, setSubmitting }) => {
     try {
@@ -134,10 +161,6 @@ const Leads = () => {
                       <Field
                         type="text"
                         name="name"
-                        id="name"
-                        // value={lead.name}
-                        // onChange={handleChange}
-                        // required
                         className="py-3 px-4 block w-full shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 border-gray-600 rounded-md bg-gray-700 text-white placeholder-gray-400"
                       />
                     </div>
@@ -162,9 +185,6 @@ const Leads = () => {
                         type="tel"
                         name="mobile"
                         id="mobile"
-                        // value={lead.mobile}
-                        // onChange={handleChange}
-                        // required
                         className="py-3 px-4 block w-full shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 border-gray-600 rounded-md bg-gray-700 text-white placeholder-gray-400"
                       />
                     </div>
@@ -187,9 +207,6 @@ const Leads = () => {
                       <Field
                         type="email"
                         name="email"
-                        id="email"
-                        // value={lead.email}
-                        // onChange={handleChange}
                         className="py-3 px-4 block w-full shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 border-gray-600 rounded-md bg-gray-700 text-white placeholder-gray-400"
                       />
                     </div>
@@ -213,9 +230,6 @@ const Leads = () => {
                       <Field
                         type="text"
                         name="requirement"
-                        id="requirement"
-                        // value={lead.requirement}
-                        // onChange={handleChange}
                         className="py-3 px-4 block w-full shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 border-gray-600 rounded-md bg-gray-700 text-white placeholder-gray-400"
                       />
                     </div>
@@ -238,26 +252,20 @@ const Leads = () => {
                       <Field
                         as="select"
                         name="propertyType"
-                        // id="propertyType"
-                        // value={lead.propertyType}
-                        // onChange={handleChange}
                         className="py-3 px-4 block w-full shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 border-gray-600 rounded-md bg-gray-700 text-white"
                       >
                         <option value="" className="bg-gray-800">
-                          Select property type
+                          {isLoadingDropdowns ? "Loading..." : "Select property type"}
                         </option>
-                        <option value="Residential" className="bg-gray-800">
-                          Residential
-                        </option>
-                        <option value="Commercial" className="bg-gray-800">
-                          Commercial
-                        </option>
-                        <option value="Land" className="bg-gray-800">
-                          Land
-                        </option>
-                        <option value="Industrial" className="bg-gray-800">
-                          Industrial
-                        </option>
+                        {propertyType.map((type) => (
+                          <option 
+                            key={type?.id} 
+                            value={type?.name} 
+                            className="bg-gray-800"
+                          >
+                            {type?.name}
+                          </option>
+                        ))}
                       </Field>
                     </div>
                     <ErrorMessage
@@ -390,29 +398,21 @@ const Leads = () => {
                       <Field
                         as="select"
                         name="source"
-                        // id="source"
-                        // value={lead.source}
-                        // onChange={handleChange}
+                        disabled={isLoadingDropdowns}
                         className="py-3 px-4 block w-full shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 border-gray-600 rounded-md bg-gray-700 text-white"
                       >
                         <option value="" className="bg-gray-800">
-                          Select source
+                          {isLoadingDropdowns ? "Loading..." : "Select source"}
                         </option>
-                        <option value="Website" className="bg-gray-800">
-                          Website
-                        </option>
-                        <option value="Referral" className="bg-gray-800">
-                          Referral
-                        </option>
-                        <option value="Walk-in" className="bg-gray-800">
-                          Walk-in
-                        </option>
-                        <option value="Social Media" className="bg-gray-800">
-                          Social Media
-                        </option>
-                        <option value="Advertisement" className="bg-gray-800">
-                          Advertisement
-                        </option>
+                        {leadSource.map((source) => (
+                          <option 
+                            key={source?.id} 
+                            value={source?.name} 
+                            className="bg-gray-800"
+                          >
+                            {source?.name}
+                          </option>
+                        ))}
                       </Field>
                     </div>
                     <ErrorMessage
