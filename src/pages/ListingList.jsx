@@ -19,6 +19,7 @@ import { GiHomeGarage, GiSmart } from "react-icons/gi";
 import { BiArea } from "react-icons/bi";
 import axios from "axios";
 import { usePropertySearchMutation } from "../services/propertyApi";
+import { useDebounce } from "../utils/useDebounce";
 
 const API_BASE_URL = "http://localhost:5000/api/listings";
 
@@ -32,6 +33,7 @@ function ListingList() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [showFilters, setShowFilters] = useState(false);
+  const debouncedSearch = useDebounce(searchTerm, 500);
 
   const [filters, setFilters] = useState({
     propertyType: "",
@@ -42,47 +44,37 @@ function ListingList() {
     location: "",
   });
 
-  // Fetch listings with pagination and filters
-  const fetchListings = async () => {
-    try {
-      setLoading(true);
-      // const params = new URLSearchParams({
-      //   page: currentPage,
-      //   search: searchTerm,
-      //   ...filters
-      // });
-
-      // const response = await axios.get(`${API_BASE_URL}?${params.toString()}`);
-      // setListings(response.data.listings);
-      // setTotalPages(response.data.totalPages);
-      const data = {
-        filters: {
-          status: null,
-          location: null,
-          type: null,
-          agent_email: null,
-        },
-        search: null,
-        client_id: 1,
-        title: null,
-        location_search: null,
-        last_property_id: null,
-        limit: 20,
-      };
-      const res = await propertySearch(data).unwrap()
-      console.log(res,"res")
-      setListings(res)
-    } catch (err) {
-      setError("Failed to load listings. Please try again later.");
-      console.error("Error fetching listings:", err);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   useEffect(() => {
+    const fetchListings = async () => {
+      try {
+        setLoading(true);
+        const data = {
+          filters: {
+            status: null,
+            location: null,
+            type: null,
+            agent_email: null,
+          },
+          search: debouncedSearch.trim() || null,
+          client_id: 1,
+          title: null,
+          location_search: null,
+          last_property_id: null,
+          limit: 20,
+        };
+        const res = await propertySearch(data).unwrap();
+        setListings(res?.data || []);
+      } catch (err) {
+        setError("Failed to load listings. Please try again later.");
+        console.error("Error fetching listings:", err);
+        setListings(res?.data || []);
+      } finally {
+        setLoading(false);
+      }
+    };
     fetchListings();
-  }, [currentPage, searchTerm, filters]);
+  }, [debouncedSearch, propertySearch]);
 
   // Create - Navigate to new listing form
   const handleCreate = () => {
@@ -191,9 +183,13 @@ function ListingList() {
               value={searchTerm}
               onChange={(e) => {
                 setSearchTerm(e.target.value);
-                setCurrentPage(1);
               }}
             />
+            {debouncedSearch && (
+              <div className="mt-2 text-sm text-gray-500">
+                Searching for: "{debouncedSearch}"
+              </div>
+            )}
           </div>
           <button
             onClick={() => setShowFilters(!showFilters)}
@@ -309,7 +305,7 @@ function ListingList() {
 
       {/* Listings Table */}
       <div className="bg-gray-800 rounded-lg shadow overflow-hidden">
-        {listings?.data?.length === 0 ? (
+        {listings?.length === 0 ? (
           <div className="text-center py-8">
             No listings found. Try adjusting your search or filters.
           </div>
@@ -325,7 +321,7 @@ function ListingList() {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-700">
-              {listings?.data?.map((listing) => (
+              {listings?.map((listing) => (
                 <tr
                   key={listing?.property_id}
                   className="hover:bg-gray-700 transition-colors"
@@ -423,11 +419,11 @@ function ListingList() {
       </div>
 
       {/* Pagination */}
-      {listings?.data?.length > 0 && (
+      {listings?.length > 0 && (
         <div className="mt-4 flex justify-between items-center">
           <button
-            onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
-            disabled={currentPage === 1}
+            // onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
+            // disabled={currentPage === 1}
             className="flex items-center px-3 py-1 border rounded disabled:opacity-50 bg-gray-700 hover:bg-gray-600 transition-colors"
           >
             <FiChevronLeft className="mr-1" /> Previous
@@ -436,8 +432,8 @@ function ListingList() {
             Page {currentPage} of {totalPages} | {listings.length} properties
           </span>
           <button
-            onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
-            disabled={currentPage === totalPages}
+            // onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
+            // disabled={currentPage === totalPages}
             className="flex items-center px-3 py-1 border rounded disabled:opacity-50 bg-gray-700 hover:bg-gray-600 transition-colors"
           >
             Next <FiChevronRight className="ml-1" />

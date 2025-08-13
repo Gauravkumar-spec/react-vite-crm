@@ -61,7 +61,7 @@ const LeadList = () => {
     };
 
     fetchLeads();
-  }, [debouncedSearch, leadSearch]); // Removed 'search' dependency since we're using debouncedSearch
+  }, [debouncedSearch, leadSearch]); 
 
   const formatDate = (dateString) => {
     if (!dateString) return "N/A";

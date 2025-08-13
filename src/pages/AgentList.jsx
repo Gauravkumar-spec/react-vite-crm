@@ -34,10 +34,8 @@ function AgentList() {
         sort_order: "ASC",
         client_id: 1,
       };
-      // const res = await axios.get('http://localhost:5000/api/agents');
       const res = await agentSearch(data).unwrap();
       setAgents(res);
-      console.log(res,"resss")
     } catch (err) {
       console.error("Failed to fetch agents:", err);
       setError("Failed to load agents. Please try again later.");
