@@ -7,12 +7,19 @@ export const agentApi = createApi({
   endpoints: (builder) => ({
     setAgent: builder.mutation({
       query: (data) => ({
-        url: "api/setAgent",
+        url: "setAgent",
         method: "POST",
         body: data,
       }),
     }),
+    agentSearch : builder.mutation({
+      query : (data) =>({
+        url : "agentSearch",
+        method : "POST",
+        body : data
+      })
+    })
   }),
 });
 
-export const {useSetAgentMutation} = agentApi;
+export const {useSetAgentMutation ,useAgentSearchMutation} = agentApi;

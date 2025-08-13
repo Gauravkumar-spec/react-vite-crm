@@ -23,7 +23,7 @@
 // //     description: '',
 // //     features: []
 // //   });
-  
+
 // //   const [images, setImages] = useState([]);
 // //   const [videoFile, setVideoFile] = useState(null);
 // //   const [suggestions, setSuggestions] = useState([]);
@@ -53,7 +53,7 @@
 // //   const handleChange = (e) => {
 // //     const { name, value } = e.target;
 // //     setFormData(prev => ({ ...prev, [name]: value }));
-    
+
 // //     if (name === 'location') {
 // //       setLocationQuery(value);
 // //     }
@@ -135,8 +135,8 @@
 // //                   <button
 // //                     onClick={() => setActiveSection(section.id)}
 // //                     className={`flex items-center font-medium text-sm px-3 py-2 rounded-lg transition-colors ${
-// //                       activeSection === section.id 
-// //                         ? 'bg-indigo-600 text-white shadow-md' 
+// //                       activeSection === section.id
+// //                         ? 'bg-indigo-600 text-white shadow-md'
 // //                         : 'text-gray-600 hover:bg-gray-100'
 // //                     }`}
 // //                   >
@@ -227,7 +227,7 @@
 // //                     {suggestions.length > 0 && (
 // //                       <ul className="absolute z-10 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg max-h-60 overflow-auto">
 // //                         {suggestions.map((suggestion, index) => (
-// //                           <li 
+// //                           <li
 // //                             key={index}
 // //                             className="px-4 py-2 hover:bg-indigo-50 cursor-pointer text-sm text-gray-800 border-b border-gray-100 last:border-0"
 // //                             onClick={() => {
@@ -386,8 +386,8 @@
 // //                       <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-4">
 // //                         {images.map((img, index) => (
 // //                           <div key={index} className="relative group">
-// //                             <img 
-// //                               src={URL.createObjectURL(img)} 
+// //                             <img
+// //                               src={URL.createObjectURL(img)}
 // //                               alt={`Preview ${index}`}
 // //                               className="w-full h-40 object-cover rounded-lg"
 // //                             />
@@ -401,7 +401,7 @@
 // //                           </div>
 // //                         ))}
 // //                         {images.length < 12 && (
-// //                           <div 
+// //                           <div
 // //                             onClick={() => fileInputRef.current.click()}
 // //                             className="flex flex-col items-center justify-center h-40 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-indigo-500 transition-colors bg-gray-50"
 // //                           >
@@ -411,7 +411,7 @@
 // //                         )}
 // //                       </div>
 // //                     ) : (
-// //                       <div 
+// //                       <div
 // //                         onClick={() => fileInputRef.current.click()}
 // //                         className="flex flex-col items-center justify-center py-12 cursor-pointer"
 // //                       >
@@ -454,9 +454,9 @@
 // //                         <FiVideo className="mr-2" />
 // //                         {videoFile ? 'Change Video' : 'Upload Video'}
 // //                       </button>
-// //                       <input 
+// //                       <input
 // //                         ref={videoInputRef}
-// //                         type="file" 
+// //                         type="file"
 // //                         accept="video/*"
 // //                         onChange={handleVideoUpload}
 // //                         className="hidden"
@@ -464,7 +464,7 @@
 // //                       {videoFile && (
 // //                         <div className="mt-2 flex items-center">
 // //                           <span className="text-sm text-gray-700 truncate">{videoFile.name}</span>
-// //                           <button 
+// //                           <button
 // //                             type="button"
 // //                             onClick={handleVideoDelete}
 // //                             className="ml-2 text-red-600 hover:text-red-800"
@@ -549,7 +549,7 @@
 // //                 </button>
 // //               )}
 // //             </div>
-            
+
 // //             <div>
 // //               {activeSection !== 'final' ? (
 // //                 <button
@@ -589,20 +589,10 @@
 
 // // export default PropertyListingForm;
 
-
-
-
-
-
-
-
-
-
-
 // import { useState, useRef, useEffect } from 'react';
 // import { useNavigate } from 'react-router-dom';
-// import { 
-//   FiUpload, FiX, FiPlus, FiImage, FiVideo, FiCheckCircle 
+// import {
+//   FiUpload, FiX, FiPlus, FiImage, FiVideo, FiCheckCircle
 // } from 'react-icons/fi';
 // import axios from 'axios';
 
@@ -646,7 +636,7 @@
 //       const hasFeature = prev.features.includes(feature);
 //       return {
 //         ...prev,
-//         features: hasFeature 
+//         features: hasFeature
 //           ? prev.features.filter(f => f !== feature)
 //           : [...prev.features, feature]
 //       };
@@ -730,10 +720,10 @@
 
 //         {/* Property Type */}
 //         <label className="block mb-2 font-medium">Property Type</label>
-//         <select 
-//           name="propertyType" 
-//           value={formData.propertyType} 
-//           onChange={handleChange} 
+//         <select
+//           name="propertyType"
+//           value={formData.propertyType}
+//           onChange={handleChange}
 //           required
 //           className="w-full mb-4 p-2 border rounded"
 //         >
@@ -745,10 +735,10 @@
 
 //         {/* Listing Type */}
 //         <label className="block mb-2 font-medium">Listing Type</label>
-//         <select 
-//           name="listingType" 
-//           value={formData.listingType} 
-//           onChange={handleChange} 
+//         <select
+//           name="listingType"
+//           value={formData.listingType}
+//           onChange={handleChange}
 //           required
 //           className="w-full mb-4 p-2 border rounded"
 //         >
@@ -760,47 +750,47 @@
 
 //         {/* Title */}
 //         <label className="block mb-2 font-medium">Title</label>
-//         <input 
-//           type="text" 
-//           name="title" 
-//           value={formData.title} 
-//           onChange={handleChange} 
-//           required 
-//           className="w-full mb-4 p-2 border rounded" 
+//         <input
+//           type="text"
+//           name="title"
+//           value={formData.title}
+//           onChange={handleChange}
+//           required
+//           className="w-full mb-4 p-2 border rounded"
 //           placeholder="Enter property title"
 //         />
 
 //         {/* Location */}
 //         <label className="block mb-2 font-medium">Location</label>
-//         <input 
-//           type="text" 
-//           name="location" 
-//           value={formData.location} 
-//           onChange={handleChange} 
-//           required 
-//           className="w-full mb-4 p-2 border rounded" 
+//         <input
+//           type="text"
+//           name="location"
+//           value={formData.location}
+//           onChange={handleChange}
+//           required
+//           className="w-full mb-4 p-2 border rounded"
 //           placeholder="Enter location"
 //         />
 
 //         {/* Price */}
 //         <label className="block mb-2 font-medium">Price (INR)</label>
-//         <input 
-//           type="number" 
-//           name="price" 
-//           value={formData.price} 
-//           onChange={handleChange} 
-//           required 
+//         <input
+//           type="number"
+//           name="price"
+//           value={formData.price}
+//           onChange={handleChange}
+//           required
 //           min={0}
-//           className="w-full mb-4 p-2 border rounded" 
+//           className="w-full mb-4 p-2 border rounded"
 //           placeholder="Enter price"
 //         />
 
 //         {/* Bedrooms */}
 //         <label className="block mb-2 font-medium">Bedrooms</label>
-//         <select 
-//           name="bedrooms" 
-//           value={formData.bedrooms} 
-//           onChange={handleChange} 
+//         <select
+//           name="bedrooms"
+//           value={formData.bedrooms}
+//           onChange={handleChange}
 //           required
 //           className="w-full mb-4 p-2 border rounded"
 //         >
@@ -812,27 +802,27 @@
 
 //         {/* Bathrooms */}
 //         <label className="block mb-2 font-medium">Bathrooms</label>
-//         <input 
-//           type="number" 
-//           name="bathrooms" 
-//           value={formData.bathrooms} 
-//           onChange={handleChange} 
-//           required 
+//         <input
+//           type="number"
+//           name="bathrooms"
+//           value={formData.bathrooms}
+//           onChange={handleChange}
+//           required
 //           min={0}
-//           className="w-full mb-4 p-2 border rounded" 
+//           className="w-full mb-4 p-2 border rounded"
 //           placeholder="Enter number of bathrooms"
 //         />
 
 //         {/* Area */}
 //         <label className="block mb-2 font-medium">Area (sqft)</label>
-//         <input 
-//           type="number" 
-//           name="area" 
-//           value={formData.area} 
-//           onChange={handleChange} 
-//           required 
+//         <input
+//           type="number"
+//           name="area"
+//           value={formData.area}
+//           onChange={handleChange}
+//           required
 //           min={0}
-//           className="w-full mb-4 p-2 border rounded" 
+//           className="w-full mb-4 p-2 border rounded"
 //           placeholder="Enter area in sqft"
 //         />
 
@@ -869,22 +859,22 @@
 
 //         {/* Images Upload */}
 //         <label className="block mb-2 font-medium">Upload Images (Max 12)</label>
-//         <input 
-//           type="file" 
-//           multiple 
-//           accept="image/*" 
-//           onChange={handleImageUpload} 
+//         <input
+//           type="file"
+//           multiple
+//           accept="image/*"
+//           onChange={handleImageUpload}
 //           className="mb-4"
 //         />
 //         <div className="flex flex-wrap gap-4 mb-6">
 //           {images.map((img, idx) => (
 //             <div key={idx} className="relative">
-//               <img 
-//                 src={URL.createObjectURL(img)} 
-//                 alt="Preview" 
-//                 className="w-24 h-24 object-cover rounded border" 
+//               <img
+//                 src={URL.createObjectURL(img)}
+//                 alt="Preview"
+//                 className="w-24 h-24 object-cover rounded border"
 //               />
-//               <button 
+//               <button
 //                 type="button"
 //                 onClick={() => removeImage(idx)}
 //                 className="absolute top-0 right-0 bg-red-600 text-white rounded-full p-1 hover:bg-red-800"
@@ -897,17 +887,17 @@
 
 //         {/* Video Upload */}
 //         <label className="block mb-2 font-medium">Upload Video (Max 50MB)</label>
-//         <input 
-//           type="file" 
-//           accept="video/*" 
-//           onChange={handleVideoUpload} 
+//         <input
+//           type="file"
+//           accept="video/*"
+//           onChange={handleVideoUpload}
 //           className="mb-4"
 //         />
 //         {videoFile && (
 //           <div className="mb-6 flex items-center gap-4">
-//             <video 
-//               src={URL.createObjectURL(videoFile)} 
-//               controls 
+//             <video
+//               src={URL.createObjectURL(videoFile)}
+//               controls
 //               className="w-64 rounded border"
 //             />
 //             <button
@@ -921,7 +911,7 @@
 //         )}
 
 //         {/* Submit */}
-//         <button 
+//         <button
 //           type="submit"
 //           disabled={isSubmitting}
 //           className="bg-indigo-600 text-white px-6 py-2 rounded hover:bg-indigo-700 disabled:opacity-50"
@@ -935,68 +925,77 @@
 
 // export default PropertyListingForm;
 
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import {
+  FiUpload,
+  FiX,
+  FiPlus,
+  FiImage,
+  FiVideo,
+  FiCheckCircle,
+  FiHome,
+  FiDollarSign,
+  FiMapPin,
+  FiLayers,
+  FiGrid,
+  FiCheck,
+  FiTrash2,
+} from "react-icons/fi";
+import axios from "axios";
+import { Field, Form, Formik } from "formik";
 
-
-
-
-
-
-
-
-
-
-
-
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { 
-  FiUpload, FiX, FiPlus, FiImage, FiVideo, 
-  FiCheckCircle, FiHome, FiDollarSign, FiMapPin, 
-  FiLayers, FiGrid, FiCheck, FiTrash2, FiUser, FiMail, FiPhone
-} from 'react-icons/fi';
-import axios from 'axios';
-
-const propertyTypes = ['Apartment', 'Villa', 'Townhouse', 'Penthouse', 'Commercial', 'Land'];
-const listingTypes = ['For Sale', 'For Rent', 'Pre-sale', 'Foreclosure'];
-const bedroomsOptions = ['Studio', '1', '2', '3', '4', '5+'];
+const propertyTypes = [
+  "Apartment",
+  "Villa",
+  "Townhouse",
+  "Penthouse",
+  "Commercial",
+  "Land",
+];
+const listingTypes = ["For Sale", "For Rent", "Pre-sale", "Foreclosure"];
+const bedroomsOptions = ["Studio", "1", "2", "3", "4", "5+"];
 const featuresList = [
-  'Swimming Pool', 'Gym', 'Parking', 'Security', 'Garden',
-  'Balcony', 'Furnished', 'Pet Friendly', 'Smart Home', 'View'
+  "Swimming Pool",
+  "Gym",
+  "Parking",
+  "Security",
+  "Garden",
+  "Balcony",
+  "Furnished",
+  "Pet Friendly",
+  "Smart Home",
+  "View",
 ];
 
 function PropertyListingForm() {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    property_type: 'Flat',
-    property_category: 'Sale',
-    title: 'DLF Phase 5 Floor',
-    location: '',
-    price: '10500000',
-    bedrooms: '',
-    bathrooms: '',
-    size_sqft: 1500,
-    bhk:'3',
-    floors:'10',
-    facing:'East',
-    maintenance: '10000',
-    expected_value: 'null',
-    description: '',
-    furnishing:'Furnished',
+    propertyType: "",
+    listingType: "",
+    title: "",
+    location: "",
+    price: "",
+    bedrooms: "",
+    bathrooms: "",
+    area: "",
+    description: "",
     features: [],
-    agent_email: "agent1@example.com",
-    builder: "DLF Builder",
-    description: "Spacious flat with amenities",
-    contactName: '',
-    contactEmail: '',
-    contactPhone: '',
-    contactType: 'Owner', // Owner or Agent
-    availability: 'Available', // Availability options
-    images: ["url1.jpg", "url2.jpg"],
-    video: "https://youtube.com/demo",
-    facilities: ["School", "Metro", "Market"]
-
   });
+
+  const initialValues = {
+    propertyType: "",
+    listingType: "",
+    title: "",
+    location: "",
+    price: "",
+    bedrooms: "",
+    bathrooms: "",
+    area: "",
+    description: "",
+    features: [],
+  };
 
   const [images, setImages] = useState([]);
   const [videoFile, setVideoFile] = useState(null);
@@ -1005,17 +1004,17 @@ function PropertyListingForm() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const toggleFeature = (feature) => {
-    setFormData(prev => {
+    setFormData((prev) => {
       const hasFeature = prev.features.includes(feature);
       return {
         ...prev,
-        features: hasFeature 
-          ? prev.features.filter(f => f !== feature)
-          : [...prev.features, feature]
+        features: hasFeature
+          ? prev.features.filter((f) => f !== feature)
+          : [...prev.features, feature],
       };
     });
   };
@@ -1023,20 +1022,20 @@ function PropertyListingForm() {
   const handleImageUpload = (e) => {
     const files = Array.from(e.target.files);
     if (files.length + images.length > 12) {
-      alert('Maximum 12 images allowed');
+      alert("Maximum 12 images allowed");
       return;
     }
-    setImages(prev => [...prev, ...files]);
+    setImages((prev) => [...prev, ...files]);
   };
 
   const removeImage = (index) => {
-    setImages(prev => prev.filter((_, i) => i !== index));
+    setImages((prev) => prev.filter((_, i) => i !== index));
   };
 
   const handleVideoUpload = (e) => {
     const file = e.target.files[0];
     if (file && file.size > 50 * 1024 * 1024) {
-      alert('Video file should be less than 50MB');
+      alert("Video file should be less than 50MB");
       return;
     }
     setVideoFile(file);
@@ -1046,36 +1045,37 @@ function PropertyListingForm() {
     setVideoFile(null);
   };
 
-  const nextStep = () => setCurrentStep(prev => prev + 1);
-  const prevStep = () => setCurrentStep(prev => prev - 1);
+  const nextStep = () => setCurrentStep((prev) => prev + 1);
+  const prevStep = () => setCurrentStep((prev) => prev - 1);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setIsSubmitting(true);
+  const handleSubmit = async (values,{ resetForm, setSubmitting }) => {
+    console.log(values,"propertyList")
+    // e.preventDefault();
+    // setIsSubmitting(true);
 
-    try {
-      const dataToSend = new FormData();
-      Object.entries(formData).forEach(([key, value]) => {
-        if (key === 'features') {
-          dataToSend.append(key, JSON.stringify(value));
-        } else {
-          dataToSend.append(key, value);
-        }
-      });
-      images.forEach(image => dataToSend.append('images', image));
-      if (videoFile) dataToSend.append('video', videoFile);
+    // try {
+    //   const dataToSend = new FormData();
+    //   Object.entries(formData).forEach(([key, value]) => {
+    //     if (key === "features") {
+    //       dataToSend.append(key, JSON.stringify(value));
+    //     } else {
+    //       dataToSend.append(key, value);
+    //     }
+    //   });
+    //   images.forEach((image) => dataToSend.append("images", image));
+    //   if (videoFile) dataToSend.append("video", videoFile);
 
-      await axios.post('http://localhost:5000/api/listings', dataToSend, {
-        headers: { 'Content-Type': 'multipart/form-data' }
-      });
+    //   await axios.post("http://localhost:5000/api/listings", dataToSend, {
+    //     headers: { "Content-Type": "multipart/form-data" },
+    //   });
 
-      navigate('/listings/success');
-    } catch (err) {
-      console.error(err);
-      alert('Failed to submit listing. Try again.');
-    } finally {
-      setIsSubmitting(false);
-    }
+    //   navigate("/listings/success");
+    // } catch (err) {
+    //   console.error(err);
+    //   alert("Failed to submit listing. Try again.");
+    // } finally {
+    //   setIsSubmitting(false);
+    // }
   };
 
   return (
@@ -1085,587 +1085,416 @@ function PropertyListingForm() {
         <div className="flex justify-between mb-12 relative">
           {[1, 2, 3, 4].map((step) => (
             <div key={step} className="flex flex-col items-center z-10">
-              <div className={`w-10 h-10 rounded-full flex items-center justify-center ${currentStep >= step ? 'bg-indigo-600 text-white' : 'bg-gray-800 border-2 border-gray-600 text-gray-400'}`}>
+              <div
+                className={`w-10 h-10 rounded-full flex items-center justify-center ${
+                  currentStep >= step
+                    ? "bg-indigo-600 text-white"
+                    : "bg-gray-800 border-2 border-gray-600 text-gray-400"
+                }`}
+              >
                 {currentStep > step ? <FiCheck size={18} /> : step}
               </div>
-              <span className={`mt-2 text-sm font-medium ${currentStep >= step ? 'text-indigo-400' : 'text-gray-500'}`}>
-                {step === 1 ? 'Details' : step === 2 ? 'Media' : step === 3 ? 'Contact' : 'Review'}
+              <span
+                className={`mt-2 text-sm font-medium ${
+                  currentStep >= step ? "text-indigo-400" : "text-gray-500"
+                }`}
+              >
+                {step === 1 ? "Details" : step === 2 ? "Media" : "Review"}
               </span>
             </div>
           ))}
           <div className="absolute top-5 left-0 right-0 h-1 bg-gray-700 -z-1">
-            <div 
-              className="h-full bg-indigo-600 transition-all duration-300" 
-              style={{ width: `${(currentStep - 1) * 33.33}%` }}
+            <div
+              className="h-full bg-indigo-600 transition-all duration-300"
+              style={{ width: `${(currentStep - 1) * 50}%` }}
             ></div>
           </div>
         </div>
 
         <div className="bg-gray-800 rounded-xl shadow-xl overflow-hidden border border-gray-700">
-          <form onSubmit={handleSubmit}>
-            {/* Step 1: Property Details */}
-            {currentStep === 1 && (
-              <div className="p-8">
-                <h2 className="text-2xl font-bold text-gray-100 mb-6">Property Details</h2>
-                
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {/* Property Type */}
-                  <div className="space-y-2">
-                    <label className="block text-sm font-medium text-gray-300 flex items-center">
-                      <FiHome className="mr-2" /> Property Type
-                    </label>
-                    <select 
-                      name="propertyType" 
-                      value={formData.propertyType} 
-                      onChange={handleChange} 
-                      required
-                      className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-100"
-                    >
-                      <option value="" className="text-gray-400">Select property type</option>
-                      {propertyTypes.map(type => (
-                        <option key={type} value={type} className="text-gray-100">{type}</option>
-                      ))}
-                    </select>
-                  </div>
+          <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+            {({isSubmitting}) => (
+              <Form>
+                {/* Step 1: Property Details */}
+                {currentStep === 1 && (
+                  <div className="p-8">
+                    <h2 className="text-2xl font-bold text-gray-100 mb-6">
+                      Property Details
+                    </h2>
 
-                  {/* Listing Type */}
-                  <div className="space-y-2">
-                    <label className="block text-sm font-medium text-gray-300 flex items-center">
-                      <FiLayers className="mr-2" /> Listing Type
-                    </label>
-                    <select 
-                      name="listingType" 
-                      value={formData.listingType} 
-                      onChange={handleChange} 
-                      required
-                      className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-100"
-                    >
-                      <option value="" className="text-gray-400">Select listing type</option>
-                      {listingTypes.map(type => (
-                        <option key={type} value={type} className="text-gray-100">{type}</option>
-                      ))}
-                    </select>
-                  </div>
-
-                  {/* Title */}
-                  <div className="space-y-2 md:col-span-2">
-                    <label className="block text-sm font-medium text-gray-300">Title</label>
-                    <input 
-                      type="text" 
-                      name="title" 
-                      value={formData.title} 
-                      onChange={handleChange} 
-                      required 
-                      className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-100" 
-                      placeholder="Modern luxury apartment with sea view"
-                    />
-                  </div>
-
-                  {/* Location */}
-                  <div className="space-y-2 md:col-span-2">
-                    <label className="block text-sm font-medium text-gray-300 flex items-center">
-                      <FiMapPin className="mr-2" /> Location
-                    </label>
-                    <input 
-                      type="text" 
-                      name="location" 
-                      value={formData.location} 
-                      onChange={handleChange} 
-                      required 
-                      className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-100" 
-                      placeholder="123 Main St, Downtown, City"
-                    />
-                  </div>
-
-                  {/* Price */}
-                  <div className="space-y-2">
-                    <label className="block text-sm font-medium text-gray-300 flex items-center">
-                      <FiDollarSign className="mr-2" /> Price (INR)
-                    </label>
-                    <div className="relative">
-                      <span className="absolute left-3 top-3 text-gray-400">₹</span>
-                      <input 
-                        type="number" 
-                        name="price" 
-                        value={formData.price} 
-                        onChange={handleChange} 
-                        required 
-                        min={0}
-                        className="w-full pl-8 pr-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-100" 
-                        placeholder="5,000,000"
-                      />
-                    </div>
-                  </div>
-
-                  {/* Bedrooms */}
-                  <div className="space-y-2">
-                    <label className="block text-sm font-medium text-gray-300">Bedrooms</label>
-                    <select 
-                      name="bedrooms" 
-                      value={formData.bedrooms} 
-                      onChange={handleChange} 
-                      required
-                      className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-100"
-                    >
-                      <option value="" className="text-gray-400">Select bedrooms</option>
-                      {bedroomsOptions.map(b => (
-                        <option key={b} value={b} className="text-gray-100">{b}</option>
-                      ))}
-                    </select>
-                  </div>
-
-                  {/* Bathrooms */}
-                  <div className="space-y-2">
-                    <label className="block text-sm font-medium text-gray-300">Bathrooms</label>
-                    <input 
-                      type="number" 
-                      name="bathrooms" 
-                      value={formData.bathrooms} 
-                      onChange={handleChange} 
-                      required 
-                      min={0}
-                      className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-100" 
-                      placeholder="2"
-                    />
-                  </div>
-
-                  {/* Area */}
-                  <div className="space-y-2">
-                    <label className="block text-sm font-medium text-gray-300">Area (sqft)</label>
-                    <div className="relative">
-                      <input 
-                        type="number" 
-                        name="area" 
-                        value={formData.area} 
-                        onChange={handleChange} 
-                        required 
-                        min={0}
-                        className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-100" 
-                        placeholder="1200"
-                      />
-                      <span className="absolute right-3 top-3 text-gray-400">sqft</span>
-                    </div>
-                  </div>
-
-                  {/* Description */}
-                  <div className="space-y-2 md:col-span-2">
-                    <label className="block text-sm font-medium text-gray-300">Description</label>
-                    <textarea
-                      name="description"
-                      value={formData.description}
-                      onChange={handleChange}
-                      rows={4}
-                      className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-100"
-                      placeholder="Describe the property in detail..."
-                    />
-                  </div>
-
-                  {/* Features */}
-                  <div className="space-y-2 md:col-span-2">
-                    <label className="block text-sm font-medium text-gray-300">Features</label>
-                    <div className="flex flex-wrap gap-2">
-                      {featuresList.map(feature => (
-                        <button
-                          type="button"
-                          key={feature}
-                          onClick={() => toggleFeature(feature)}
-                          className={`px-3 py-1 rounded-full text-sm flex items-center ${
-                            formData.features.includes(feature)
-                              ? 'bg-indigo-600 text-white border border-indigo-600'
-                              : 'bg-gray-700 text-gray-300 border border-gray-600'
-                          }`}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      {/* Property Type */}
+                      <div className="space-y-2">
+                        <label className="block text-sm font-medium text-gray-300 flex items-center">
+                          <FiHome className="mr-2" /> Property Type
+                        </label>
+                        <Field
+                          as="select"
+                          name="propertyType"
+                          // value={formData.propertyType}
+                          // onChange={handleChange}
+                          // required
+                          className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-100"
                         >
-                          {feature}
-                          {formData.features.includes(feature) && <FiCheckCircle className="ml-1" />}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-
-                <div className="mt-8 flex justify-end">
-                  <button
-                    type="button"
-                    onClick={nextStep}
-                    className="px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors flex items-center"
-                  >
-                    Next: Add Media <FiPlus className="ml-2" />
-                  </button>
-                </div>
-              </div>
-            )}
-
-            {/* Step 2: Media Upload */}
-            {currentStep === 2 && (
-              <div className="p-8">
-                <h2 className="text-2xl font-bold text-gray-100 mb-6">Media Upload</h2>
-                
-                {/* Images Upload */}
-                <div className="mb-8">
-                  <label className="block text-sm font-medium text-gray-300 mb-3 flex items-center">
-                    <FiImage className="mr-2" /> Property Images (Max 12)
-                  </label>
-                  <div className="border-2 border-dashed border-gray-600 rounded-lg p-6 text-center bg-gray-700/50">
-                    <div className="flex flex-col items-center justify-center">
-                      <FiUpload className="w-10 h-10 text-gray-400 mb-3" />
-                      <p className="text-sm text-gray-400">
-                        <span className="font-medium text-indigo-400">Click to upload</span> or drag and drop
-                      </p>
-                      <p className="text-xs text-gray-500 mt-1">PNG, JPG up to 5MB each</p>
-                    </div>
-                    <input 
-                      type="file" 
-                      multiple 
-                      accept="image/*" 
-                      onChange={handleImageUpload} 
-                      className="hidden" 
-                      id="image-upload"
-                    />
-                    <label 
-                      htmlFor="image-upload" 
-                      className="mt-4 inline-block px-4 py-2 bg-gray-700 text-gray-300 rounded-md hover:bg-gray-600 cursor-pointer border border-gray-600"
-                    >
-                      Select Images
-                    </label>
-                  </div>
-
-                  {/* Image Previews */}
-                  {images.length > 0 && (
-                    <div className="mt-6">
-                      <h3 className="text-sm font-medium text-gray-300 mb-3">Selected Images ({images.length}/12)</h3>
-                      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-                        {images.map((img, idx) => (
-                          <div key={idx} className="relative group">
-                            <img 
-                              src={URL.createObjectURL(img)} 
-                              alt="Preview" 
-                              className="w-full h-32 object-cover rounded-lg border border-gray-600" 
-                            />
-                            <button 
-                              type="button"
-                              onClick={() => removeImage(idx)}
-                              className="absolute top-2 right-2 bg-red-600 text-white rounded-full p-1 hover:bg-red-700 opacity-0 group-hover:opacity-100 transition-opacity"
+                          <option value="" className="text-gray-400">
+                            Select property type
+                          </option>
+                          {propertyTypes.map((type) => (
+                            <option
+                              key={type}
+                              value={type}
+                              className="text-gray-100"
                             >
-                              <FiX size={16} />
-                            </button>
-                          </div>
-                        ))}
+                              {type}
+                            </option>
+                          ))}
+                        </Field>
                       </div>
-                    </div>
-                  )}
-                </div>
 
-                {/* Video Upload */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-3 flex items-center">
-                    <FiVideo className="mr-2" /> Property Video (Optional, Max 50MB)
-                  </label>
-                  {!videoFile ? (
-                    <div className="border-2 border-dashed border-gray-600 rounded-lg p-6 text-center bg-gray-700/50">
-                      <div className="flex flex-col items-center justify-center">
-                        <FiVideo className="w-10 h-10 text-gray-400 mb-3" />
-                        <p className="text-sm text-gray-400">
-                          <span className="font-medium text-indigo-400">Click to upload</span> a video tour
-                        </p>
-                        <p className="text-xs text-gray-500 mt-1">MP4, MOV up to 50MB</p>
-                      </div>
-                      <input 
-                        type="file" 
-                        accept="video/*" 
-                        onChange={handleVideoUpload} 
-                        className="hidden" 
-                        id="video-upload"
-                      />
-                      <label 
-                        htmlFor="video-upload" 
-                        className="mt-4 inline-block px-4 py-2 bg-gray-700 text-gray-300 rounded-md hover:bg-gray-600 cursor-pointer border border-gray-600"
-                      >
-                        Select Video
-                      </label>
-                    </div>
-                  ) : (
-                    <div className="border border-gray-600 rounded-lg p-4 bg-gray-700">
-                      <div className="flex items-center justify-between mb-3">
-                        <div className="flex items-center text-gray-300">
-                          <FiVideo className="text-indigo-400 mr-2" />
-                          <span className="text-sm font-medium">{videoFile.name}</span>
-                        </div>
-                        <button
-                          type="button"
-                          onClick={removeVideo}
-                          className="text-red-400 hover:text-red-300 flex items-center text-sm"
+                      {/* Listing Type */}
+                      <div className="space-y-2">
+                        <label className="block text-sm font-medium text-gray-300 flex items-center">
+                          <FiLayers className="mr-2" /> Listing Type
+                        </label>
+                        <Field
+                        as="select"
+                          name="listingType"
+                          // value={formData.listingType}
+                          // onChange={handleChange}
+                          // required
+                          className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-100"
                         >
-                          <FiTrash2 className="mr-1" /> Remove
-                        </button>
+                          <option value="" className="text-gray-400">
+                            Select listing type
+                          </option>
+                          {listingTypes.map((type) => (
+                            <option
+                              key={type}
+                              value={type}
+                              className="text-gray-100"
+                            >
+                              {type}
+                            </option>
+                          ))}
+                        </Field>
                       </div>
-                      <video 
-                        src={URL.createObjectURL(videoFile)} 
-                        controls 
-                        className="w-full rounded-lg"
-                      />
-                    </div>
-                  )}
-                </div>
 
-                <div className="mt-8 flex justify-between">
-                  <button
-                    type="button"
-                    onClick={prevStep}
-                    className="px-6 py-3 border border-gray-600 text-gray-300 rounded-lg hover:bg-gray-700 transition-colors"
-                  >
-                    Back
-                  </button>
-                  <button
-                    type="button"
-                    onClick={nextStep}
-                    className="px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors flex items-center"
-                  >
-                    Next: Contact Info <FiUser className="ml-2" />
-                  </button>
-                </div>
-              </div>
-            )}
-
-            {/* Step 3: Contact Information */}
-            {currentStep === 3 && (
-              <div className="p-8">
-                <h2 className="text-2xl font-bold text-gray-100 mb-6">Contact Information</h2>
-                
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {/* Contact Type */}
-                  <div className="space-y-2 md:col-span-2">
-                    <label className="block text-sm font-medium text-gray-300">You are</label>
-                    <div className="flex gap-4 mt-2">
-                      <label className="inline-flex items-center">
-                        <input
-                          type="radio"
-                          name="contactType"
-                          value="Owner"
-                          checked={formData.contactType === 'Owner'}
-                          onChange={handleChange}
-                          className="h-4 w-4 text-indigo-600 border-gray-600 bg-gray-700"
+                      {/* Title */}
+                      <div className="space-y-2 md:col-span-2">
+                        <label className="block text-sm font-medium text-gray-300">
+                          Title
+                        </label>
+                        <Field
+                          type="text"
+                          name="title"
+                          // value={formData.title}
+                          // onChange={handleChange}
+                          // required
+                          className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-100"
+                          placeholder="Modern luxury apartment with sea view"
                         />
-                        <span className="ml-2 text-gray-300">Property Owner</span>
-                      </label>
-                      <label className="inline-flex items-center">
-                        <input
-                          type="radio"
-                          name="contactType"
-                          value="Agent"
-                          checked={formData.contactType === 'Agent'}
-                          onChange={handleChange}
-                          className="h-4 w-4 text-indigo-600 border-gray-600 bg-gray-700"
+                      </div>
+
+                      {/* Location */}
+                      <div className="space-y-2 md:col-span-2">
+                        <label className="block text-sm font-medium text-gray-300 flex items-center">
+                          <FiMapPin className="mr-2" /> Location
+                        </label>
+                        <Field
+                          type="text"
+                          name="location"
+                          // value={formData.location}
+                          // onChange={handleChange}
+                          // required
+                          className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-100"
+                          placeholder="123 Main St, Downtown, City"
                         />
-                        <span className="ml-2 text-gray-300">Real Estate Agent</span>
-                      </label>
-                    </div>
-                  </div>
+                      </div>
 
-                  {/* Contact Name */}
-                  <div className="space-y-2">
-                    <label className="block text-sm font-medium text-gray-300 flex items-center">
-                      <FiUser className="mr-2" /> Contact Name
-                    </label>
-                    <input
-                      type="text"
-                      name="contactName"
-                      value={formData.contactName}
-                      onChange={handleChange}
-                      required
-                      className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-100"
-                      placeholder="John Doe"
-                    />
-                  </div>
+                      {/* Price */}
+                      <div className="space-y-2">
+                        <label className="block text-sm font-medium text-gray-300 flex items-center">
+                          <FiDollarSign className="mr-2" /> Price (INR)
+                        </label>
+                        <div className="relative">
+                          <span className="absolute left-3 top-3 text-gray-400">
+                            ₹
+                          </span>
+                          <Field
+                            type="number"
+                            name="price"
+                            // value={formData.price}
+                            // onChange={handleChange}
+                            // required
+                            min={0}
+                            className="w-full pl-8 pr-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-100"
+                            placeholder="5,000,000"
+                          />
+                        </div>
+                      </div>
 
-                  {/* Contact Email */}
-                  <div className="space-y-2">
-                    <label className="block text-sm font-medium text-gray-300 flex items-center">
-                      <FiMail className="mr-2" /> Email
-                    </label>
-                    <input
-                      type="email"
-                      name="contactEmail"
-                      value={formData.contactEmail}
-                      onChange={handleChange}
-                      required
-                      className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-100"
-                      placeholder="john@example.com"
-                    />
-                  </div>
+                      {/* Bedrooms */}
+                      <div className="space-y-2">
+                        <label className="block text-sm font-medium text-gray-300">
+                          Bedrooms
+                        </label>
+                        <Field
+                         as="select"
+                          name="bedrooms"
+                          // value={formData.bedrooms}
+                          // onChange={handleChange}
+                          // required
+                          className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-100"
+                        >
+                          <option value="" className="text-gray-400">
+                            Select bedrooms
+                          </option>
+                          {bedroomsOptions.map((b) => (
+                            <option key={b} value={b} className="text-gray-100">
+                              {b}
+                            </option>
+                          ))}
+                        </Field>
+                      </div>
 
-                  {/* Contact Phone */}
-                  <div className="space-y-2">
-                    <label className="block text-sm font-medium text-gray-300 flex items-center">
-                      <FiPhone className="mr-2" /> Phone Number
-                    </label>
-                    <input
-                      type="tel"
-                      name="contactPhone"
-                      value={formData.contactPhone}
-                      onChange={handleChange}
-                      required
-                      className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-100"
-                      placeholder="+91 9876543210"
-                    />
-                  </div>
+                      {/* Bathrooms */}
+                      <div className="space-y-2">
+                        <label className="block text-sm font-medium text-gray-300">
+                          Bathrooms
+                        </label>
+                        <Field
+                          type="number"
+                          name="bathrooms"
+                          // value={formData.bathrooms}
+                          // onChange={handleChange}
+                          // required
+                          min={0}
+                          className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-100"
+                          placeholder="2"
+                        />
+                      </div>
 
-                  {/* Availability */}
-                  <div className="space-y-2 md:col-span-2">
-                    <label className="block text-sm font-medium text-gray-300">Availability for Viewings</label>
-                    <select
-                      name="availability"
-                      value={formData.availability}
-                      onChange={handleChange}
-                      className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-100"
-                    >
-                      <option value="Any time">Any time</option>
-                      <option value="Weekdays">Weekdays</option>
-                      <option value="Weekends">Weekends</option>
-                      <option value="Morning">Morning (9AM-12PM)</option>
-                      <option value="Afternoon">Afternoon (12PM-5PM)</option>
-                      <option value="Evening">Evening (5PM-8PM)</option>
-                      <option value="By appointment">By appointment only</option>
-                    </select>
-                  </div>
+                      {/* Area */}
+                      <div className="space-y-2">
+                        <label className="block text-sm font-medium text-gray-300">
+                          Area (sqft)
+                        </label>
+                        <div className="relative">
+                          <Field
+                            type="number"
+                            name="area"
+                            // value={formData.area}
+                            // onChange={handleChange}
+                            // required
+                            min={0}
+                            className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-100"
+                            placeholder="1200"
+                          />
+                          <span className="absolute right-3 top-3 text-gray-400">
+                            sqft
+                          </span>
+                        </div>
+                      </div>
 
-                  {/* Additional Contact Info */}
-                  <div className="space-y-2 md:col-span-2">
-                    <label className="block text-sm font-medium text-gray-300">Additional Contact Information (Optional)</label>
-                    <textarea
-                      name="additionalContactInfo"
-                      value={formData.additionalContactInfo || ''}
-                      onChange={handleChange}
-                      rows={3}
-                      className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-100"
-                      placeholder="Any additional contact methods or information for potential buyers/renters"
-                    />
-                  </div>
-                </div>
+                      {/* Description */}
+                      <div className="space-y-2 md:col-span-2">
+                        <label className="block text-sm font-medium text-gray-300">
+                          Description
+                        </label>
+                        <Field
+                         as="textarea"
+                          name="description"
+                          // value={formData.description}
+                          // onChange={handleChange}
+                          rows={4}
+                          className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-100"
+                          placeholder="Describe the property in detail..."
+                        />
+                      </div>
 
-                <div className="mt-8 flex justify-between">
-                  <button
-                    type="button"
-                    onClick={prevStep}
-                    className="px-6 py-3 border border-gray-600 text-gray-300 rounded-lg hover:bg-gray-700 transition-colors"
-                  >
-                    Back
-                  </button>
-                  <button
-                    type="button"
-                    onClick={nextStep}
-                    className="px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors flex items-center"
-                  >
-                    Next: Review & Submit <FiCheck className="ml-2" />
-                  </button>
-                </div>
-              </div>
-            )}
-
-            {/* Step 4: Review & Submit */}
-            {currentStep === 4 && (
-              <div className="p-8">
-                <h2 className="text-2xl font-bold text-gray-100 mb-6">Review Your Listing</h2>
-                
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                  {/* Property Details Summary */}
-                  <div>
-                    <h3 className="text-lg font-semibold text-gray-100 mb-4 pb-2 border-b border-gray-700">Property Details</h3>
-                    <div className="space-y-4">
-                      <div>
-                        <p className="text-sm text-gray-400">Property Type</p>
-                        <p className="font-medium text-gray-200">{formData.propertyType || 'Not specified'}</p>
-                      </div>
-                      <div>
-                        <p className="text-sm text-gray-400">Listing Type</p>
-                        <p className="font-medium text-gray-200">{formData.listingType || 'Not specified'}</p>
-                      </div>
-                      <div>
-                        <p className="text-sm text-gray-400">Title</p>
-                        <p className="font-medium text-gray-200">{formData.title || 'Not specified'}</p>
-                      </div>
-                      <div>
-                        <p className="text-sm text-gray-400">Location</p>
-                        <p className="font-medium text-gray-200">{formData.location || 'Not specified'}</p>
-                      </div>
-                      <div>
-                        <p className="text-sm text-gray-400">Price</p>
-                        <p className="font-medium text-gray-200">
-                          {formData.price ? `₹${Number(formData.price).toLocaleString()}` : 'Not specified'}
-                        </p>
-                      </div>
-                      <div>
-                        <p className="text-sm text-gray-400">Bedrooms</p>
-                        <p className="font-medium text-gray-200">{formData.bedrooms || 'Not specified'}</p>
-                      </div>
-                      <div>
-                        <p className="text-sm text-gray-400">Bathrooms</p>
-                        <p className="font-medium text-gray-200">{formData.bathrooms || 'Not specified'}</p>
-                      </div>
-                      <div>
-                        <p className="text-sm text-gray-400">Area</p>
-                        <p className="font-medium text-gray-200">
-                          {formData.area ? `${formData.area} sqft` : 'Not specified'}
-                        </p>
-                      </div>
-                      <div>
-                        <p className="text-sm text-gray-400">Description</p>
-                        <p className="font-medium text-gray-200">{formData.description || 'Not provided'}</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Features & Media & Contact Summary */}
-                  <div>
-                    <div className="mb-8">
-                      <h3 className="text-lg font-semibold text-gray-100 mb-4 pb-2 border-b border-gray-700">Features</h3>
-                      {formData.features.length > 0 ? (
+                      {/* Features */}
+                      <div className="space-y-2 md:col-span-2">
+                        <label className="block text-sm font-medium text-gray-300">
+                          Features
+                        </label>
                         <div className="flex flex-wrap gap-2">
-                          {formData.features.map(feature => (
-                            <span key={feature} className="px-3 py-1 bg-gray-700 text-indigo-300 rounded-full text-sm flex items-center border border-gray-600">
-                              <FiCheck className="mr-1" /> {feature}
-                            </span>
+                          {featuresList.map((feature) => (
+                            <button
+                              type="button"
+                              key={feature}
+                              onClick={() => toggleFeature(feature)}
+                              className={`px-3 py-1 rounded-full text-sm flex items-center ${
+                                formData.features.includes(feature)
+                                  ? "bg-indigo-600 text-white border border-indigo-600"
+                                  : "bg-gray-700 text-gray-300 border border-gray-600"
+                              }`}
+                            >
+                              {feature}
+                              {formData.features.includes(feature) && (
+                                <FiCheckCircle className="ml-1" />
+                              )}
+                            </button>
                           ))}
                         </div>
-                      ) : (
-                        <p className="text-gray-500">No features selected</p>
+                      </div>
+                    </div>
+
+                    <div className="mt-8 flex justify-end">
+                      <button
+                        type="button"
+                        onClick={nextStep}
+                        className="px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors flex items-center"
+                      >
+                        Next: Add Media <FiPlus className="ml-2" />
+                      </button>
+                    </div>
+                  </div>
+                )}
+
+                {/* Step 2: Media Upload */}
+                {currentStep === 2 && (
+                  <div className="p-8">
+                    <h2 className="text-2xl font-bold text-gray-100 mb-6">
+                      Media Upload
+                    </h2>
+
+                    {/* Images Upload */}
+                    <div className="mb-8">
+                      <label className="block text-sm font-medium text-gray-300 mb-3 flex items-center">
+                        <FiImage className="mr-2" /> Property Images (Max 12)
+                      </label>
+                      <div className="border-2 border-dashed border-gray-600 rounded-lg p-6 text-center bg-gray-700/50">
+                        <div className="flex flex-col items-center justify-center">
+                          <FiUpload className="w-10 h-10 text-gray-400 mb-3" />
+                          <p className="text-sm text-gray-400">
+                            <span className="font-medium text-indigo-400">
+                              Click to upload
+                            </span>{" "}
+                            or drag and drop
+                          </p>
+                          <p className="text-xs text-gray-500 mt-1">
+                            PNG, JPG up to 5MB each
+                          </p>
+                        </div>
+                        <input
+                          type="file"
+                          multiple
+                          accept="image/*"
+                          onChange={handleImageUpload}
+                          className="hidden"
+                          id="image-upload"
+                        />
+                        <label
+                          htmlFor="image-upload"
+                          className="mt-4 inline-block px-4 py-2 bg-gray-700 text-gray-300 rounded-md hover:bg-gray-600 cursor-pointer border border-gray-600"
+                        >
+                          Select Images
+                        </label>
+                      </div>
+
+                      {/* Image Previews */}
+                      {images.length > 0 && (
+                        <div className="mt-6">
+                          <h3 className="text-sm font-medium text-gray-300 mb-3">
+                            Selected Images ({images.length}/12)
+                          </h3>
+                          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+                            {images.map((img, idx) => (
+                              <div key={idx} className="relative group">
+                                <img
+                                  src={URL.createObjectURL(img)}
+                                  alt="Preview"
+                                  className="w-full h-32 object-cover rounded-lg border border-gray-600"
+                                />
+                                <button
+                                  type="button"
+                                  onClick={() => removeImage(idx)}
+                                  className="absolute top-2 right-2 bg-red-600 text-white rounded-full p-1 hover:bg-red-700 opacity-0 group-hover:opacity-100 transition-opacity"
+                                >
+                                  <FiX size={16} />
+                                </button>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
                       )}
                     </div>
 
-                    <div className="mb-8">
-                      <h3 className="text-lg font-semibold text-gray-100 mb-4 pb-2 border-b border-gray-700">Media</h3>
-                      <div className="mb-4">
-                        <p className="text-sm text-gray-400 mb-2">Images ({images.length})</p>
-                        {images.length > 0 ? (
-                          <div className="grid grid-cols-3 gap-2">
-                            {images.slice(0, 3).map((img, idx) => (
-                              <img 
-                                key={idx} 
-                                src={URL.createObjectURL(img)} 
-                                alt="Preview" 
-                                className="w-full h-20 object-cover rounded border border-gray-600" 
-                              />
-                            ))}
-                            {images.length > 3 && (
-                              <div className="bg-gray-700 rounded border border-gray-600 flex items-center justify-center text-xs text-gray-400">
-                                +{images.length - 3} more
-                              </div>
-                            )}
+                    {/* Video Upload */}
+                    <div>
+                      <label className="block text-sm font-medium text-gray-300 mb-3 flex items-center">
+                        <FiVideo className="mr-2" /> Property Video (Optional,
+                        Max 50MB)
+                      </label>
+                      {!videoFile ? (
+                        <div className="border-2 border-dashed border-gray-600 rounded-lg p-6 text-center bg-gray-700/50">
+                          <div className="flex flex-col items-center justify-center">
+                            <FiVideo className="w-10 h-10 text-gray-400 mb-3" />
+                            <p className="text-sm text-gray-400">
+                              <span className="font-medium text-indigo-400">
+                                Click to upload
+                              </span>{" "}
+                              a video tour
+                            </p>
+                            <p className="text-xs text-gray-500 mt-1">
+                              MP4, MOV up to 50MB
+                            </p>
                           </div>
-                        ) : (
-                          <p className="text-gray-500">No images added</p>
-                        )}
-                      </div>
-                      <div>
-                        <p className="text-sm text-gray-400 mb-2">Video</p>
-                        {videoFile ? (
-                          <div className="flex items-center text-indigo-400">
-                            <FiVideo className="mr-2" />
-                            <span className="text-gray-300">{videoFile.name}</span>
+                          <input
+                            type="file"
+                            accept="video/*"
+                            onChange={handleVideoUpload}
+                            className="hidden"
+                            id="video-upload"
+                          />
+                          <label
+                            htmlFor="video-upload"
+                            className="mt-4 inline-block px-4 py-2 bg-gray-700 text-gray-300 rounded-md hover:bg-gray-600 cursor-pointer border border-gray-600"
+                          >
+                            Select Video
+                          </label>
+                        </div>
+                      ) : (
+                        <div className="border border-gray-600 rounded-lg p-4 bg-gray-700">
+                          <div className="flex items-center justify-between mb-3">
+                            <div className="flex items-center text-gray-300">
+                              <FiVideo className="text-indigo-400 mr-2" />
+                              <span className="text-sm font-medium">
+                                {videoFile.name}
+                              </span>
+                            </div>
+                            <button
+                              type="button"
+                              onClick={removeVideo}
+                              className="text-red-400 hover:text-red-300 flex items-center text-sm"
+                            >
+                              <FiTrash2 className="mr-1" /> Remove
+                            </button>
                           </div>
-                        ) : (
-                          <p className="text-gray-500">No video added</p>
-                        )}
-                      </div>
+                          <video
+                            src={URL.createObjectURL(videoFile)}
+                            controls
+                            className="w-full rounded-lg"
+                          />
+                        </div>
+                      )}
+                    </div>
+
+                    <div className="mt-8 flex justify-between">
+                      <button
+                        type="button"
+                        onClick={prevStep}
+                        className="px-6 py-3 border border-gray-600 text-gray-300 rounded-lg hover:bg-gray-700 transition-colors"
+                      >
+                        Back
+                      </button>
+                      <button
+                        type="button"
+                        onClick={nextStep}
+                        className="px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors flex items-center"
+                      >
+                        Next: Review & Submit <FiCheck className="ml-2" />
+                      </button>
                     </div>
 
                     <div>
@@ -1694,37 +1523,203 @@ function PropertyListingForm() {
                       </div>
                     </div>
                   </div>
-                </div>
+                )}
 
-                <div className="mt-8 flex justify-between">
-                  <button
-                    type="button"
-                    onClick={prevStep}
-                    className="px-6 py-3 border border-gray-600 text-gray-300 rounded-lg hover:bg-gray-700 transition-colors"
-                  >
-                    Back
-                  </button>
-                  <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors disabled:opacity-70 disabled:cursor-not-allowed flex items-center"
-                  >
-                    {isSubmitting ? (
-                      <>
-                        <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                        </svg>
-                        Submitting...
-                      </>
-                    ) : (
-                      'Submit Listing'
-                    )}
-                  </button>
-                </div>
-              </div>
+                {/* Step 3: Review & Submit */}
+                {currentStep === 3 && (
+                  <div className="p-8">
+                    <h2 className="text-2xl font-bold text-gray-100 mb-6">
+                      Review Your Listing
+                    </h2>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                      {/* Property Details Summary */}
+                      <div>
+                        <h3 className="text-lg font-semibold text-gray-100 mb-4 pb-2 border-b border-gray-700">
+                          Property Details
+                        </h3>
+                        <div className="space-y-4">
+                          <div>
+                            <p className="text-sm text-gray-400">
+                              Property Type
+                            </p>
+                            <p className="font-medium text-gray-200">
+                              {formData.propertyType || "Not specified"}
+                            </p>
+                          </div>
+                          <div>
+                            <p className="text-sm text-gray-400">
+                              Listing Type
+                            </p>
+                            <p className="font-medium text-gray-200">
+                              {formData.listingType || "Not specified"}
+                            </p>
+                          </div>
+                          <div>
+                            <p className="text-sm text-gray-400">Title</p>
+                            <p className="font-medium text-gray-200">
+                              {formData.title || "Not specified"}
+                            </p>
+                          </div>
+                          <div>
+                            <p className="text-sm text-gray-400">Location</p>
+                            <p className="font-medium text-gray-200">
+                              {formData.location || "Not specified"}
+                            </p>
+                          </div>
+                          <div>
+                            <p className="text-sm text-gray-400">Price</p>
+                            <p className="font-medium text-gray-200">
+                              {formData.price
+                                ? `₹${Number(formData.price).toLocaleString()}`
+                                : "Not specified"}
+                            </p>
+                          </div>
+                          <div>
+                            <p className="text-sm text-gray-400">Bedrooms</p>
+                            <p className="font-medium text-gray-200">
+                              {formData.bedrooms || "Not specified"}
+                            </p>
+                          </div>
+                          <div>
+                            <p className="text-sm text-gray-400">Bathrooms</p>
+                            <p className="font-medium text-gray-200">
+                              {formData.bathrooms || "Not specified"}
+                            </p>
+                          </div>
+                          <div>
+                            <p className="text-sm text-gray-400">Area</p>
+                            <p className="font-medium text-gray-200">
+                              {formData.area
+                                ? `${formData.area} sqft`
+                                : "Not specified"}
+                            </p>
+                          </div>
+                          <div>
+                            <p className="text-sm text-gray-400">Description</p>
+                            <p className="font-medium text-gray-200">
+                              {formData.description || "Not provided"}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Features & Media Summary */}
+                      <div>
+                        <div className="mb-8">
+                          <h3 className="text-lg font-semibold text-gray-100 mb-4 pb-2 border-b border-gray-700">
+                            Features
+                          </h3>
+                          {formData.features.length > 0 ? (
+                            <div className="flex flex-wrap gap-2">
+                              {formData.features.map((feature) => (
+                                <span
+                                  key={feature}
+                                  className="px-3 py-1 bg-gray-700 text-indigo-300 rounded-full text-sm flex items-center border border-gray-600"
+                                >
+                                  <FiCheck className="mr-1" /> {feature}
+                                </span>
+                              ))}
+                            </div>
+                          ) : (
+                            <p className="text-gray-500">
+                              No features selected
+                            </p>
+                          )}
+                        </div>
+
+                        <div>
+                          <h3 className="text-lg font-semibold text-gray-100 mb-4 pb-2 border-b border-gray-700">
+                            Media
+                          </h3>
+                          <div className="mb-4">
+                            <p className="text-sm text-gray-400 mb-2">
+                              Images ({images.length})
+                            </p>
+                            {images.length > 0 ? (
+                              <div className="grid grid-cols-3 gap-2">
+                                {images.slice(0, 3).map((img, idx) => (
+                                  <img
+                                    key={idx}
+                                    src={URL.createObjectURL(img)}
+                                    alt="Preview"
+                                    className="w-full h-20 object-cover rounded border border-gray-600"
+                                  />
+                                ))}
+                                {images.length > 3 && (
+                                  <div className="bg-gray-700 rounded border border-gray-600 flex items-center justify-center text-xs text-gray-400">
+                                    +{images.length - 3} more
+                                  </div>
+                                )}
+                              </div>
+                            ) : (
+                              <p className="text-gray-500">No images added</p>
+                            )}
+                          </div>
+                          <div>
+                            <p className="text-sm text-gray-400 mb-2">Video</p>
+                            {videoFile ? (
+                              <div className="flex items-center text-indigo-400">
+                                <FiVideo className="mr-2" />
+                                <span className="text-gray-300">
+                                  {videoFile.name}
+                                </span>
+                              </div>
+                            ) : (
+                              <p className="text-gray-500">No video added</p>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="mt-8 flex justify-between">
+                      <button
+                        type="button"
+                        onClick={prevStep}
+                        className="px-6 py-3 border border-gray-600 text-gray-300 rounded-lg hover:bg-gray-700 transition-colors"
+                      >
+                        Back
+                      </button>
+                      <button
+                        type="submit"
+                        disabled={isSubmitting}
+                        className="px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors disabled:opacity-70 disabled:cursor-not-allowed flex items-center"
+                      >
+                        {isSubmitting ? (
+                          <>
+                            <svg
+                              className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                            >
+                              <circle
+                                className="opacity-25"
+                                cx="12"
+                                cy="12"
+                                r="10"
+                                stroke="currentColor"
+                                strokeWidth="4"
+                              ></circle>
+                              <path
+                                className="opacity-75"
+                                fill="currentColor"
+                                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                              ></path>
+                            </svg>
+                            Submitting...
+                          </>
+                        ) : (
+                          "Submit Listing"
+                        )}
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </Form>
             )}
-          </form>
+          </Formik>
         </div>
       </div>
     </div>
