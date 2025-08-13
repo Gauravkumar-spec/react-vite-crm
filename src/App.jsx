@@ -15,6 +15,8 @@ import Login from "./pages/Login";
 
 import { AuthProvider, useAuth } from "./context/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
+import EditListing from "./pages/EditListing";
+import ListingDetails from "./pages/ListingDetails";
 
 function AppShell() {
   const location = useLocation();
@@ -36,7 +38,7 @@ function AppShell() {
   // Show loading state during initial auth check
   if (loading) {
     return (
-      <div className="bg-gray-100 dark:bg-gray-900 text-black dark:text-white min-h-screen flex items-center justify-center">
+      <div className="bg-gray-100 dark:bg-gray-400 text-black dark:text-white min-h-screen flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500 mx-auto"></div>
           <p className="mt-4 text-gray-600 dark:text-gray-400">Checking authentication...</p>
@@ -46,15 +48,34 @@ function AppShell() {
   }
 
   return (
-    <div className="bg-gray-100 dark:bg-gray-900 text-black dark:text-white min-h-screen flex">
+    <div
+      className="bg-gray-100 dark:bg-gray-200 text-black dark:text-white"
+      style={{
+        display: "flex",
+        height: "100vh",
+        overflow: "hidden"
+      }}
+    >
+      
       {/* Sidebar only when authenticated and not on login */}
       {isAuthenticated && !isLoginRoute && (
         <Sidebar
-          open={open}
-          setOpen={setOpen}
-          mobileOpen={mobileOpen}
-          setMobileOpen={setMobileOpen}
-        />
+        open={open}
+        setOpen={setOpen}
+        mobileOpen={mobileOpen}
+        setMobileOpen={setMobileOpen}
+        style={{
+          width: "300px",
+          backgroundColor: "#222",
+          color: "#ccc",
+          position: "fixed",
+          top: 0,
+          left: 0,
+          height: "100vh",
+          overflowY: "auto",
+          padding: "1rem"
+        }}
+      />
       )}
 
       {/* Main content area */}
@@ -67,6 +88,10 @@ function AppShell() {
         style={{
           marginLeft:
             isAuthenticated && !isLoginRoute ? (open ? "16rem" : "5rem") : 0,
+             height: "100vh",
+          overflowY: "auto",
+          flexGrow: 1,
+          padding: "1rem"
         }}
       >
         {/* Header with dark mode toggle and refresh indicator */}
@@ -156,6 +181,22 @@ function AppShell() {
             element={
               <ProtectedRoute>
                 <LeadList />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/listings/edit/:id"
+            element={
+              <ProtectedRoute>
+                <EditListing />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/listings/:id"
+            element={
+              <ProtectedRoute>
+                <ListingDetails />
               </ProtectedRoute>
             }
           />

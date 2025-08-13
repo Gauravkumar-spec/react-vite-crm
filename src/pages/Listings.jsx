@@ -1050,60 +1050,35 @@ function PropertyListingForm() {
 
   const handleSubmit = async (values,{ resetForm, setSubmitting }) => {
     console.log(values,"propertyList")
-    // e.preventDefault();
-    // setIsSubmitting(true);
 
-    // try {
-    //   const dataToSend = new FormData();
-    //   Object.entries(formData).forEach(([key, value]) => {
-    //     if (key === "features") {
-    //       dataToSend.append(key, JSON.stringify(value));
-    //     } else {
-    //       dataToSend.append(key, value);
-    //     }
-    //   });
-    //   images.forEach((image) => dataToSend.append("images", image));
-    //   if (videoFile) dataToSend.append("video", videoFile);
-
-    //   await axios.post("http://localhost:5000/api/listings", dataToSend, {
-    //     headers: { "Content-Type": "multipart/form-data" },
-    //   });
-
-    //   navigate("/listings/success");
-    // } catch (err) {
-    //   console.error(err);
-    //   alert("Failed to submit listing. Try again.");
-    // } finally {
-    //   setIsSubmitting(false);
-    // }
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 py-12 px-4 sm:px-6 lg:px-8">
+     <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-5xl mx-auto">
         {/* Progress Steps */}
         <div className="flex justify-between mb-12 relative">
-          {[1, 2, 3, 4].map((step) => (
+          {[1, 2, 3].map((step) => (
             <div key={step} className="flex flex-col items-center z-10">
               <div
                 className={`w-10 h-10 rounded-full flex items-center justify-center ${
                   currentStep >= step
                     ? "bg-indigo-600 text-white"
-                    : "bg-gray-800 border-2 border-gray-600 text-gray-400"
+                  : "bg-white border-2 border-gray-300 text-gray-500"
                 }`}
               >
                 {currentStep > step ? <FiCheck size={18} /> : step}
               </div>
               <span
                 className={`mt-2 text-sm font-medium ${
-                  currentStep >= step ? "text-indigo-400" : "text-gray-500"
+                  currentStep >= step ? "text-indigo-600" : "text-gray-500"
                 }`}
               >
                 {step === 1 ? "Details" : step === 2 ? "Media" : "Review"}
               </span>
             </div>
           ))}
-          <div className="absolute top-5 left-0 right-0 h-1 bg-gray-700 -z-1">
+          <div className="absolute top-5 left-0 right-0 h-1 bg-gray-200 -z-1">
             <div
               className="h-full bg-indigo-600 transition-all duration-300"
               style={{ width: `${(currentStep - 1) * 50}%` }}
@@ -1111,21 +1086,21 @@ function PropertyListingForm() {
           </div>
         </div>
 
-        <div className="bg-gray-800 rounded-xl shadow-xl overflow-hidden border border-gray-700">
+        <div className="bg-white rounded-xl shadow-xl overflow-hidden border border-gray-200">
           <Formik initialValues={initialValues} onSubmit={handleSubmit}>
             {({isSubmitting}) => (
               <Form>
                 {/* Step 1: Property Details */}
                 {currentStep === 1 && (
                   <div className="p-8">
-                    <h2 className="text-2xl font-bold text-gray-100 mb-6">
+                    <h2 className="text-2xl font-bold text-gray-900 mb-6">
                       Property Details
                     </h2>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       {/* Property Type */}
                       <div className="space-y-2">
-                        <label className="block text-sm font-medium text-gray-300 flex items-center">
+                        <label className="block text-sm font-medium text-gray-700 flex items-center">
                           <FiHome className="mr-2" /> Property Type
                         </label>
                         <Field
@@ -1134,16 +1109,16 @@ function PropertyListingForm() {
                           // value={formData.propertyType}
                           // onChange={handleChange}
                           // required
-                          className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-100"
+                          className="w-full px-4 py-3 bg-gray-100 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-900"
                         >
-                          <option value="" className="text-gray-400">
+                          <option value="" className="text-gray-500">
                             Select property type
                           </option>
                           {propertyTypes.map((type) => (
                             <option
                               key={type}
                               value={type}
-                              className="text-gray-100"
+                              className="text-gray-900"
                             >
                               {type}
                             </option>
@@ -1153,7 +1128,7 @@ function PropertyListingForm() {
 
                       {/* Listing Type */}
                       <div className="space-y-2">
-                        <label className="block text-sm font-medium text-gray-300 flex items-center">
+                        <label className="block text-sm font-medium text-gray-700 flex items-center">
                           <FiLayers className="mr-2" /> Listing Type
                         </label>
                         <Field
@@ -1162,16 +1137,16 @@ function PropertyListingForm() {
                           // value={formData.listingType}
                           // onChange={handleChange}
                           // required
-                          className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-100"
+                          className="w-full px-4 py-3 bg-gray-100 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-900"
                         >
-                          <option value="" className="text-gray-400">
+                          <option value="" className="text-gray-500">
                             Select listing type
                           </option>
                           {listingTypes.map((type) => (
                             <option
                               key={type}
                               value={type}
-                              className="text-gray-100"
+                              className="text-gray-900"
                             >
                               {type}
                             </option>
@@ -1181,7 +1156,7 @@ function PropertyListingForm() {
 
                       {/* Title */}
                       <div className="space-y-2 md:col-span-2">
-                        <label className="block text-sm font-medium text-gray-300">
+                        <label className="block text-sm font-medium text-gray-700">
                           Title
                         </label>
                         <Field
@@ -1190,14 +1165,14 @@ function PropertyListingForm() {
                           // value={formData.title}
                           // onChange={handleChange}
                           // required
-                          className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-100"
+                          className="w-full px-4 py-3 bg-gray-100 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-900"
                           placeholder="Modern luxury apartment with sea view"
                         />
                       </div>
 
                       {/* Location */}
                       <div className="space-y-2 md:col-span-2">
-                        <label className="block text-sm font-medium text-gray-300 flex items-center">
+                        <label className="block text-sm font-medium text-gray-700 flex items-center">
                           <FiMapPin className="mr-2" /> Location
                         </label>
                         <Field
@@ -1206,18 +1181,18 @@ function PropertyListingForm() {
                           // value={formData.location}
                           // onChange={handleChange}
                           // required
-                          className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-100"
+                           className="w-full px-4 py-3 bg-gray-100 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-900"
                           placeholder="123 Main St, Downtown, City"
                         />
                       </div>
 
                       {/* Price */}
                       <div className="space-y-2">
-                        <label className="block text-sm font-medium text-gray-300 flex items-center">
+                        <label className="block text-sm font-medium text-gray-700 flex items-center">
                           <FiDollarSign className="mr-2" /> Price (INR)
                         </label>
                         <div className="relative">
-                          <span className="absolute left-3 top-3 text-gray-400">
+                          <span className="absolute left-3 top-3 text-gray-500">
                             ₹
                           </span>
                           <Field
@@ -1227,7 +1202,7 @@ function PropertyListingForm() {
                             // onChange={handleChange}
                             // required
                             min={0}
-                            className="w-full pl-8 pr-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-100"
+                            className="w-full pl-8 pr-4 py-3 bg-gray-100 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-900"
                             placeholder="5,000,000"
                           />
                         </div>
@@ -1235,7 +1210,7 @@ function PropertyListingForm() {
 
                       {/* Bedrooms */}
                       <div className="space-y-2">
-                        <label className="block text-sm font-medium text-gray-300">
+                        <label className="block text-sm font-medium text-gray-700">
                           Bedrooms
                         </label>
                         <Field
@@ -1244,13 +1219,13 @@ function PropertyListingForm() {
                           // value={formData.bedrooms}
                           // onChange={handleChange}
                           // required
-                          className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-100"
+                          className="w-full px-4 py-3 bg-gray-100 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-900"
                         >
-                          <option value="" className="text-gray-400">
+                          <option value="" className="text-gray-500">
                             Select bedrooms
                           </option>
                           {bedroomsOptions.map((b) => (
-                            <option key={b} value={b} className="text-gray-100">
+                            <option key={b} value={b} className="text-gray-900">
                               {b}
                             </option>
                           ))}
@@ -1259,7 +1234,7 @@ function PropertyListingForm() {
 
                       {/* Bathrooms */}
                       <div className="space-y-2">
-                        <label className="block text-sm font-medium text-gray-300">
+                        <label className="block text-sm font-medium text-gray-700">
                           Bathrooms
                         </label>
                         <Field
@@ -1269,14 +1244,14 @@ function PropertyListingForm() {
                           // onChange={handleChange}
                           // required
                           min={0}
-                          className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-100"
+                          className="w-full px-4 py-3 bg-gray-100 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-900"
                           placeholder="2"
                         />
                       </div>
 
                       {/* Area */}
                       <div className="space-y-2">
-                        <label className="block text-sm font-medium text-gray-300">
+                        <label className="block text-sm font-medium text-gray-700">
                           Area (sqft)
                         </label>
                         <div className="relative">
@@ -1287,10 +1262,10 @@ function PropertyListingForm() {
                             // onChange={handleChange}
                             // required
                             min={0}
-                            className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-100"
+                                className="w-full px-4 py-3 bg-gray-100 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-900"
                             placeholder="1200"
                           />
-                          <span className="absolute right-3 top-3 text-gray-400">
+                          <span className="absolute right-3 top-3 text-gray-700">
                             sqft
                           </span>
                         </div>
@@ -1307,14 +1282,14 @@ function PropertyListingForm() {
                           // value={formData.description}
                           // onChange={handleChange}
                           rows={4}
-                          className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-100"
+                          className="w-full px-4 py-3 bg-gray-100 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-900"
                           placeholder="Describe the property in detail..."
                         />
                       </div>
 
                       {/* Features */}
                       <div className="space-y-2 md:col-span-2">
-                        <label className="block text-sm font-medium text-gray-300">
+                        <label className="block text-sm font-medium text-gray-700">
                           Features
                         </label>
                         <div className="flex flex-wrap gap-2">
@@ -1322,11 +1297,11 @@ function PropertyListingForm() {
                             <button
                               type="button"
                               key={feature}
-                              onClick={() => toggleFeature(feature)}
+                             onClick={() => toggleFeature(feature)}
                               className={`px-3 py-1 rounded-full text-sm flex items-center ${
                                 formData.features.includes(feature)
                                   ? "bg-indigo-600 text-white border border-indigo-600"
-                                  : "bg-gray-700 text-gray-300 border border-gray-600"
+                                  : "bg-gray-100 text-gray-800 border border-gray-300"
                               }`}
                             >
                               {feature}
@@ -1343,7 +1318,7 @@ function PropertyListingForm() {
                       <button
                         type="button"
                         onClick={nextStep}
-                        className="px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors flex items-center"
+                         className="px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors flex items-center"
                       >
                         Next: Add Media <FiPlus className="ml-2" />
                       </button>
@@ -1354,16 +1329,16 @@ function PropertyListingForm() {
                 {/* Step 2: Media Upload */}
                 {currentStep === 2 && (
                   <div className="p-8">
-                    <h2 className="text-2xl font-bold text-gray-100 mb-6">
+                    <h2 className="text-2xl font-bold text-gray-600 mb-6">
                       Media Upload
                     </h2>
 
                     {/* Images Upload */}
                     <div className="mb-8">
-                      <label className="block text-sm font-medium text-gray-300 mb-3 flex items-center">
+                      <label className="block text-sm font-medium text-gray-500 mb-3 flex items-center">
                         <FiImage className="mr-2" /> Property Images (Max 12)
                       </label>
-                      <div className="border-2 border-dashed border-gray-600 rounded-lg p-6 text-center bg-gray-700/50">
+                      <div className="border-2 border-dashed border-gray-600 rounded-lg p-6 text-center bg-gray-100">
                         <div className="flex flex-col items-center justify-center">
                           <FiUpload className="w-10 h-10 text-gray-400 mb-3" />
                           <p className="text-sm text-gray-400">
@@ -1386,7 +1361,7 @@ function PropertyListingForm() {
                         />
                         <label
                           htmlFor="image-upload"
-                          className="mt-4 inline-block px-4 py-2 bg-gray-700 text-gray-300 rounded-md hover:bg-gray-600 cursor-pointer border border-gray-600"
+                          className="mt-4 inline-block px-4 py-2 bg-gray-200 text-gray-500 rounded-md hover:bg-gray-300 cursor-pointer border border-gray-600"
                         >
                           Select Images
                         </label>
@@ -1409,7 +1384,7 @@ function PropertyListingForm() {
                                 <button
                                   type="button"
                                   onClick={() => removeImage(idx)}
-                                  className="absolute top-2 right-2 bg-red-600 text-white rounded-full p-1 hover:bg-red-700 opacity-0 group-hover:opacity-100 transition-opacity"
+                                  className="absolute top-2 right-2 bg-red-600 text-gray-700 rounded-full p-1 hover:bg-red-700 opacity-0 group-hover:opacity-100 transition-opacity"
                                 >
                                   <FiX size={16} />
                                 </button>
@@ -1422,12 +1397,12 @@ function PropertyListingForm() {
 
                     {/* Video Upload */}
                     <div>
-                      <label className="block text-sm font-medium text-gray-300 mb-3 flex items-center">
+                      <label className="block text-sm font-medium text-gray-500 mb-3 flex items-center">
                         <FiVideo className="mr-2" /> Property Video (Optional,
                         Max 50MB)
                       </label>
                       {!videoFile ? (
-                        <div className="border-2 border-dashed border-gray-600 rounded-lg p-6 text-center bg-gray-700/50">
+                        <div className="border-2 border-dashed border-gray-600 rounded-lg p-6 text-center bg-gray-100">
                           <div className="flex flex-col items-center justify-center">
                             <FiVideo className="w-10 h-10 text-gray-400 mb-3" />
                             <p className="text-sm text-gray-400">
@@ -1449,7 +1424,7 @@ function PropertyListingForm() {
                           />
                           <label
                             htmlFor="video-upload"
-                            className="mt-4 inline-block px-4 py-2 bg-gray-700 text-gray-300 rounded-md hover:bg-gray-600 cursor-pointer border border-gray-600"
+                            className="mt-4 inline-block px-4 py-2 bg-gray-200 text-gray-500 rounded-md hover:bg-gray-300 cursor-pointer border border-gray-500"
                           >
                             Select Video
                           </label>
@@ -1484,7 +1459,7 @@ function PropertyListingForm() {
                       <button
                         type="button"
                         onClick={prevStep}
-                        className="px-6 py-3 border border-gray-600 text-gray-300 rounded-lg hover:bg-gray-700 transition-colors"
+                        className="px-6 py-3 border border-gray-500 text-gray-600 rounded-lg hover:bg-gray-200 transition-colors"
                       >
                         Back
                       </button>
@@ -1497,7 +1472,7 @@ function PropertyListingForm() {
                       </button>
                     </div>
 
-                    <div>
+                    {/* <div>
                       <h3 className="text-lg font-semibold text-gray-100 mb-4 pb-2 border-b border-gray-700">Contact Information</h3>
                       <div className="space-y-4">
                         <div>
@@ -1521,201 +1496,192 @@ function PropertyListingForm() {
                           <p className="font-medium text-gray-200">{formData.availability || 'Not specified'}</p>
                         </div>
                       </div>
-                    </div>
+                    </div> */}
                   </div>
                 )}
 
                 {/* Step 3: Review & Submit */}
                 {currentStep === 3 && (
                   <div className="p-8">
-                    <h2 className="text-2xl font-bold text-gray-100 mb-6">
-                      Review Your Listing
-                    </h2>
+  <h2 className="text-2xl font-bold text-gray-900 mb-6">
+    Review Your Listing
+  </h2>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                      {/* Property Details Summary */}
-                      <div>
-                        <h3 className="text-lg font-semibold text-gray-100 mb-4 pb-2 border-b border-gray-700">
-                          Property Details
-                        </h3>
-                        <div className="space-y-4">
-                          <div>
-                            <p className="text-sm text-gray-400">
-                              Property Type
-                            </p>
-                            <p className="font-medium text-gray-200">
-                              {formData.propertyType || "Not specified"}
-                            </p>
-                          </div>
-                          <div>
-                            <p className="text-sm text-gray-400">
-                              Listing Type
-                            </p>
-                            <p className="font-medium text-gray-200">
-                              {formData.listingType || "Not specified"}
-                            </p>
-                          </div>
-                          <div>
-                            <p className="text-sm text-gray-400">Title</p>
-                            <p className="font-medium text-gray-200">
-                              {formData.title || "Not specified"}
-                            </p>
-                          </div>
-                          <div>
-                            <p className="text-sm text-gray-400">Location</p>
-                            <p className="font-medium text-gray-200">
-                              {formData.location || "Not specified"}
-                            </p>
-                          </div>
-                          <div>
-                            <p className="text-sm text-gray-400">Price</p>
-                            <p className="font-medium text-gray-200">
-                              {formData.price
-                                ? `₹${Number(formData.price).toLocaleString()}`
-                                : "Not specified"}
-                            </p>
-                          </div>
-                          <div>
-                            <p className="text-sm text-gray-400">Bedrooms</p>
-                            <p className="font-medium text-gray-200">
-                              {formData.bedrooms || "Not specified"}
-                            </p>
-                          </div>
-                          <div>
-                            <p className="text-sm text-gray-400">Bathrooms</p>
-                            <p className="font-medium text-gray-200">
-                              {formData.bathrooms || "Not specified"}
-                            </p>
-                          </div>
-                          <div>
-                            <p className="text-sm text-gray-400">Area</p>
-                            <p className="font-medium text-gray-200">
-                              {formData.area
-                                ? `${formData.area} sqft`
-                                : "Not specified"}
-                            </p>
-                          </div>
-                          <div>
-                            <p className="text-sm text-gray-400">Description</p>
-                            <p className="font-medium text-gray-200">
-                              {formData.description || "Not provided"}
-                            </p>
-                          </div>
-                        </div>
-                      </div>
+  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+    {/* Property Details Summary */}
+    <div>
+      <h3 className="text-lg font-semibold text-gray-700 mb-4 pb-2 border-b border-gray-300">
+        Property Details
+      </h3>
+      <div className="space-y-4">
+        <div>
+          <p className="text-sm text-gray-600">Property Type</p>
+          <p className="font-medium text-gray-900">
+            {formData.propertyType || "Not specified"}
+          </p>
+        </div>
+        <div>
+          <p className="text-sm text-gray-600">Listing Type</p>
+          <p className="font-medium text-gray-900">
+            {formData.listingType || "Not specified"}
+          </p>
+        </div>
+        <div>
+          <p className="text-sm text-gray-600">Title</p>
+          <p className="font-medium text-gray-900">
+            {formData.title || "Not specified"}
+          </p>
+        </div>
+        <div>
+          <p className="text-sm text-gray-600">Location</p>
+          <p className="font-medium text-gray-900">
+            {formData.location || "Not specified"}
+          </p>
+        </div>
+        <div>
+          <p className="text-sm text-gray-600">Price</p>
+          <p className="font-medium text-gray-900">
+            {formData.price
+              ? `₹${Number(formData.price).toLocaleString()}`
+              : "Not specified"}
+          </p>
+        </div>
+        <div>
+          <p className="text-sm text-gray-600">Bedrooms</p>
+          <p className="font-medium text-gray-900">
+            {formData.bedrooms || "Not specified"}
+          </p>
+        </div>
+        <div>
+          <p className="text-sm text-gray-600">Bathrooms</p>
+          <p className="font-medium text-gray-900">
+            {formData.bathrooms || "Not specified"}
+          </p>
+        </div>
+        <div>
+          <p className="text-sm text-gray-600">Area</p>
+          <p className="font-medium text-gray-900">
+            {formData.area ? `${formData.area} sqft` : "Not specified"}
+          </p>
+        </div>
+        <div>
+          <p className="text-sm text-gray-600">Description</p>
+          <p className="font-medium text-gray-900">
+            {formData.description || "Not provided"}
+          </p>
+        </div>
+      </div>
+    </div>
 
-                      {/* Features & Media Summary */}
-                      <div>
-                        <div className="mb-8">
-                          <h3 className="text-lg font-semibold text-gray-100 mb-4 pb-2 border-b border-gray-700">
-                            Features
-                          </h3>
-                          {formData.features.length > 0 ? (
-                            <div className="flex flex-wrap gap-2">
-                              {formData.features.map((feature) => (
-                                <span
-                                  key={feature}
-                                  className="px-3 py-1 bg-gray-700 text-indigo-300 rounded-full text-sm flex items-center border border-gray-600"
-                                >
-                                  <FiCheck className="mr-1" /> {feature}
-                                </span>
-                              ))}
-                            </div>
-                          ) : (
-                            <p className="text-gray-500">
-                              No features selected
-                            </p>
-                          )}
-                        </div>
+    {/* Features & Media Summary */}
+    <div>
+      <div className="mb-8">
+        <h3 className="text-lg font-semibold text-gray-700 mb-4 pb-2 border-b border-gray-300">
+          Features
+        </h3>
+        {formData.features.length > 0 ? (
+          <div className="flex flex-wrap gap-2">
+            {formData.features.map((feature) => (
+              <span
+                key={feature}
+                className="px-3 py-1 bg-gray-100 text-indigo-700 rounded-full text-sm flex items-center border border-gray-300"
+              >
+                <FiCheck className="mr-1" /> {feature}
+              </span>
+            ))}
+          </div>
+        ) : (
+          <p className="text-gray-500">No features selected</p>
+        )}
+      </div>
 
-                        <div>
-                          <h3 className="text-lg font-semibold text-gray-100 mb-4 pb-2 border-b border-gray-700">
-                            Media
-                          </h3>
-                          <div className="mb-4">
-                            <p className="text-sm text-gray-400 mb-2">
-                              Images ({images.length})
-                            </p>
-                            {images.length > 0 ? (
-                              <div className="grid grid-cols-3 gap-2">
-                                {images.slice(0, 3).map((img, idx) => (
-                                  <img
-                                    key={idx}
-                                    src={URL.createObjectURL(img)}
-                                    alt="Preview"
-                                    className="w-full h-20 object-cover rounded border border-gray-600"
-                                  />
-                                ))}
-                                {images.length > 3 && (
-                                  <div className="bg-gray-700 rounded border border-gray-600 flex items-center justify-center text-xs text-gray-400">
-                                    +{images.length - 3} more
-                                  </div>
-                                )}
-                              </div>
-                            ) : (
-                              <p className="text-gray-500">No images added</p>
-                            )}
-                          </div>
-                          <div>
-                            <p className="text-sm text-gray-400 mb-2">Video</p>
-                            {videoFile ? (
-                              <div className="flex items-center text-indigo-400">
-                                <FiVideo className="mr-2" />
-                                <span className="text-gray-300">
-                                  {videoFile.name}
-                                </span>
-                              </div>
-                            ) : (
-                              <p className="text-gray-500">No video added</p>
-                            )}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+      <div>
+        <h3 className="text-lg font-semibold text-gray-700 mb-4 pb-2 border-b border-gray-300">
+          Media
+        </h3>
+        <div className="mb-4">
+          <p className="text-sm text-gray-600 mb-2">
+            Images ({images.length})
+          </p>
+          {images.length > 0 ? (
+            <div className="grid grid-cols-3 gap-2">
+              {images.slice(0, 3).map((img, idx) => (
+                <img
+                  key={idx}
+                  src={URL.createObjectURL(img)}
+                  alt="Preview"
+                  className="w-full h-20 object-cover rounded border border-gray-300"
+                />
+              ))}
+              {images.length > 3 && (
+                <div className="bg-gray-100 rounded border border-gray-300 flex items-center justify-center text-xs text-gray-600">
+                  +{images.length - 3} more
+                </div>
+              )}
+            </div>
+          ) : (
+            <p className="text-gray-500">No images added</p>
+          )}
+        </div>
+        <div>
+          <p className="text-sm text-gray-600 mb-2">Video</p>
+          {videoFile ? (
+            <div className="flex items-center text-indigo-600">
+              <FiVideo className="mr-2" />
+              <span className="text-gray-800">{videoFile.name}</span>
+            </div>
+          ) : (
+            <p className="text-gray-500">No video added</p>
+          )}
+        </div>
+      </div>
+    </div>
+  </div>
 
-                    <div className="mt-8 flex justify-between">
-                      <button
-                        type="button"
-                        onClick={prevStep}
-                        className="px-6 py-3 border border-gray-600 text-gray-300 rounded-lg hover:bg-gray-700 transition-colors"
-                      >
-                        Back
-                      </button>
-                      <button
-                        type="submit"
-                        disabled={isSubmitting}
-                        className="px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors disabled:opacity-70 disabled:cursor-not-allowed flex items-center"
-                      >
-                        {isSubmitting ? (
-                          <>
-                            <svg
-                              className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                            >
-                              <circle
-                                className="opacity-25"
-                                cx="12"
-                                cy="12"
-                                r="10"
-                                stroke="currentColor"
-                                strokeWidth="4"
-                              ></circle>
-                              <path
-                                className="opacity-75"
-                                fill="currentColor"
-                                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                              ></path>
-                            </svg>
-                            Submitting...
-                          </>
-                        ) : (
-                          "Submit Listing"
-                        )}
-                      </button>
-                    </div>
-                  </div>
+  <div className="mt-8 flex justify-between">
+    <button
+      type="button"
+      onClick={prevStep}
+      className="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-100 transition-colors"
+    >
+      Back
+    </button>
+    <button
+      type="submit"
+      disabled={isSubmitting}
+      className="px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors disabled:opacity-70 disabled:cursor-not-allowed flex items-center"
+    >
+      {isSubmitting ? (
+        <>
+          <svg
+            className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <circle
+              className="opacity-25"
+              cx="12"
+              cy="12"
+              r="10"
+              stroke="currentColor"
+              strokeWidth="4"
+            ></circle>
+            <path
+              className="opacity-75"
+              fill="currentColor"
+              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+            ></path>
+          </svg>
+          Submitting...
+        </>
+      ) : (
+        "Submit Listing"
+      )}
+    </button>
+  </div>
+</div>
+
                 )}
               </Form>
             )}
