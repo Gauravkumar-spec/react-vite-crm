@@ -28,6 +28,6 @@ export const propertyValidationSchema = Yup.object().shape({
   brokerage: Yup.string().required("Required"),
   property_age: Yup.number().typeError("Must be a number").required("Required"),
   facilities: Yup.array().min(1, "Select at least one facility"),
-  images: Yup.array().min(1, "At least one image is required"),
+  // images: Yup.array().min(1, "At least one image is required"),
   video: Yup.mixed().nullable(),
 });

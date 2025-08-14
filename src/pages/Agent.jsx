@@ -3,8 +3,11 @@ import axios from "axios";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { useSetAgentMutation } from "../services/agentApi";
 import { agentValidationSchema } from "../utils/validationSchemas/agentSchema";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 function Agent() {
+  const navigate = useNavigate();
   const [setAgent] = useSetAgentMutation();
   // Form state
   const [formData, setFormData] = useState({
@@ -96,6 +99,7 @@ function Agent() {
 
   // Form submission
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
+    console.log(values, "form values");
     try {
       let imageUrl = "";
       if (values.profile) {
@@ -117,14 +121,23 @@ function Agent() {
         area: values.area,
         profile_photo_url: imageUrl, // send Base64 as URL
       };
-      console.log(payload);
       const res = await setAgent(payload).unwrap();
-      resetForm();
-      setCurrentStep(1);
-
-      // Clear file input
-      if (fileInputRef.current) {
-        fileInputRef.current.value = "";
+      console.log(res, "response from setAgent");
+      if (res?.message) {
+        toast.success("Lead saved successfully!", {
+          position: "top-center",
+          autoClose: 3000,
+          theme: "dark",
+        });
+        resetForm();
+        setCurrentStep(1);
+        setErrorMessage("");
+        if (fileInputRef.current) {
+          fileInputRef.current.value = "";
+        }
+        setTimeout(() => {
+          navigate("/agentlist");
+        }, 1000);
       }
     } catch (err) {
       console.error("Error adding agent:", err);
@@ -141,7 +154,7 @@ function Agent() {
     { id: 2, name: "Profile Setup" },
   ];
 
-return (
+  return (
     <div className="min-h-screen bg-gradient-to-br from-gray-100 to-gray-200 p-4 flex items-center justify-center">
       {/* Background elements */}
       <div className="fixed inset-0 opacity-10 pointer-events-none">
@@ -216,7 +229,9 @@ return (
                     ) : (
                       <span
                         className={`font-medium ${
-                          currentStep >= step.id ? "text-blue-400" : "text-gray-400"
+                          currentStep >= step.id
+                            ? "text-blue-400"
+                            : "text-gray-400"
                         }`}
                       >
                         {step.id}
@@ -261,15 +276,26 @@ return (
                         Personal Information
                       </h2>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        {["name","email","phone","address","city","area"].map((field) => (
+                        {[
+                          "name",
+                          "email",
+                          "mobile",
+                          "address",
+                          "city",
+                          "area",
+                        ].map((field) => (
                           <div key={field}>
                             <label className="block text-sm font-medium text-gray-600 mb-1">
                               {field.charAt(0).toUpperCase() + field.slice(1)}*
                             </label>
                             <Field
-                              type={field==="email"?"email":"text"}
+                              type={field === "email" ? "email" : "text"}
                               name={field}
-                              placeholder={field==="phone"?"+1 (123) 456-7890":field}
+                              placeholder={
+                                field === "mobile"
+                                  ? "Enter 10-digit mobile number"
+                                  : field
+                              }
                               className="w-full px-4 py-3 bg-gray-200 border border-gray-300 rounded-lg text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400 transition-all"
                             />
                           </div>
@@ -354,7 +380,8 @@ return (
                             </div>
                             <div className="flex-1">
                               <p className="text-sm text-gray-700 mb-2">
-                                Upload a professional headshot (JPG or PNG, max 5MB)
+                                Upload a professional headshot (JPG or PNG, max
+                                5MB)
                               </p>
                               <p className="text-xs text-gray-500">
                                 Recommended size: 500x500 pixels
@@ -375,17 +402,17 @@ return (
                               {values.profile && (
                                 <button
                                   type="button"
-                                  onClick={() => setFieldValue("image", "")}
+                                  onClick={() => setFieldValue("profile", "")}
                                   className="mt-3 px-3 py-1 bg-red-100 hover:bg-red-200 text-red-700 text-sm rounded-lg flex items-center"
                                 >
                                   Remove photo
                                 </button>
                               )}
-                              <ErrorMessage
+                              {/* <ErrorMessage
                                 name="profile"
                                 component="div"
                                 className="text-red-400 text-sm mt-1"
-                              />
+                              /> */}
                             </div>
                           </div>
                         </div>
@@ -414,15 +441,17 @@ return (
                         </button>
                         <button
                           type="submit"
-                          disabled={isSubmitting || !values.profile}
+                          disabled={isSubmitting}
                           className={`px-8 py-3 rounded-lg font-medium transition-all duration-300 overflow-hidden relative group ${
-                            isSubmitting || !values.image
+                            isSubmitting
                               ? "bg-gray-300 cursor-not-allowed"
                               : "bg-gradient-to-r from-blue-400 to-purple-400 hover:shadow-lg hover:shadow-blue-300/20"
                           }`}
                         >
                           <span className="relative z-10 flex items-center justify-center">
-                            {isSubmitting ? "Processing..." : "Complete Registration"}
+                            {isSubmitting
+                              ? "Processing..."
+                              : "Complete Registration"}
                           </span>
                         </button>
                       </div>

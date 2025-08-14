@@ -54,7 +54,7 @@ export default function Sidebar() {
         </div>
 
         <ul className="mt-8 space-y-4">
-          <Link to="/" onClick={() => setMobileOpen(false)}>
+          <Link to="/dashboard" onClick={() => setMobileOpen(false)}>
             <li className="flex items-center gap-4 cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700 p-2 rounded">
               <FaHome />
               {(open || mobileOpen) && <span>Dashboard</span>}

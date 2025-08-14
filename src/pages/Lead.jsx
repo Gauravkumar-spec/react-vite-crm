@@ -26,6 +26,7 @@ const Leads = () => {
   const navigate = useNavigate();
   const [propertyType, setPropertyType] = useState([]);
   const [leadSource, setLeadSource] = useState([]);
+  const [leadRequirement, setLeadRequirement] = useState([]);
   const [isLoadingDropdowns, setIsLoadingDropdowns] = useState(true);
 
   const initialValues = {
@@ -52,8 +53,14 @@ const Leads = () => {
         const leadSourceRes = await dataTable({
           table_name: "LeadSource",
         }).unwrap();
+        const leadRequirementRes = await dataTable({
+          table_name: "LeadRequirement",
+        }).unwrap();
         setPropertyType(propertyRes?.data || propertyRes || []);
         setLeadSource(leadSourceRes?.data || leadSourceRes || []);
+        setLeadRequirement(
+          leadRequirementRes?.data || leadRequirementRes || []
+        );
       } catch (error) {
         console.error("Error fetching dropdown data:", error);
         toast.error("Failed to load dropdown options", {
@@ -63,18 +70,51 @@ const Leads = () => {
         });
 
         setPropertyType([
-          { id: 1, name: "Residential" },
-          { id: 2, name: "Commercial" },
-          { id: 3, name: "Land" },
-          { id: 4, name: "Industrial" },
+          {
+            id: 4,
+            name: "Commercial",
+          },
+          {
+            id: 1,
+            name: "Flat",
+          },
+          {
+            id: 3,
+            name: "Plot",
+          },
+          {
+            id: 2,
+            name: "Villa",
+          },
         ]);
 
         setLeadSource([
-          { id: 1, name: "Website" },
-          { id: 2, name: "Referral" },
-          { id: 3, name: "Walk-in" },
-          { id: 4, name: "Social Media" },
-          { id: 5, name: "Advertisement" },
+          {
+            id: 1,
+            name: "Ads",
+          },
+          {
+            id: 2,
+            name: "Referral",
+          },
+          {
+            id: 3,
+            name: "Site Visit",
+          },
+        ]);
+        setLeadRequirement([
+          {
+            id: 1,
+            name: "Buy",
+          },
+          {
+            id: 2,
+            name: "Rent",
+          },
+          {
+            id: 3,
+            name: "Sell",
+          },
         ]);
       } finally {
         setIsLoadingDropdowns(false);
@@ -103,7 +143,7 @@ const Leads = () => {
 
       const res = await setLead(payload).unwrap();
       console.log(res, "formsubmit");
-      if (res?.originalStatus == 201) {
+      if (res?.message) {
         toast.success("Lead saved successfully!", {
           position: "top-center",
           autoClose: 3000,
@@ -112,7 +152,7 @@ const Leads = () => {
         resetForm();
         setTimeout(() => {
           navigate("/leadlist");
-        }, 300);
+        }, 1000);
       }
     } catch (error) {
       console.error("Error saving lead:", error);
@@ -126,7 +166,7 @@ const Leads = () => {
     }
   };
 
-   return (
+  return (
     <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
       <ToastContainer />
       <div className="max-w-3xl mx-auto">
@@ -186,7 +226,7 @@ const Leads = () => {
                         type="tel"
                         name="mobile"
                         className="py-3 px-4 block w-full border border-gray-300 rounded-md bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400"
-                        placeholder="+1 123 456 7890"
+                        placeholder="Enter 10-digit mobile number"
                       />
                     </div>
                     <ErrorMessage
@@ -231,11 +271,22 @@ const Leads = () => {
                     </label>
                     <div className="mt-1">
                       <Field
-                        type="text"
+                        as="select"
                         name="requirement"
                         className="py-3 px-4 block w-full border border-gray-300 rounded-md bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400"
                         placeholder="Looking for a 2BHK apartment"
-                      />
+                      >
+                        <option value="">
+                          {isLoadingDropdowns
+                            ? "Loading..."
+                            : "Select Lead Requirement"}
+                        </option>
+                        {leadRequirement.map((type) => (
+                          <option key={type?.id} value={type?.name}>
+                            {type?.name}
+                          </option>
+                        ))}
+                      </Field>
                     </div>
                     <ErrorMessage
                       name="requirement"
@@ -260,7 +311,9 @@ const Leads = () => {
                         className="py-3 px-4 block w-full border border-gray-300 rounded-md bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400"
                       >
                         <option value="">
-                          {isLoadingDropdowns ? "Loading..." : "Select property type"}
+                          {isLoadingDropdowns
+                            ? "Loading..."
+                            : "Select property type"}
                         </option>
                         {propertyType.map((type) => (
                           <option key={type?.id} value={type?.name}>

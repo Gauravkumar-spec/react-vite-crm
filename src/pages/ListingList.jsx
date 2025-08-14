@@ -17,15 +17,18 @@ import { FaBed, FaBath, FaSwimmingPool, FaDumbbell } from "react-icons/fa";
 import { MdSecurity, MdBalcony, MdPets, MdGrass } from "react-icons/md";
 import { GiHomeGarage, GiSmart } from "react-icons/gi";
 import { BiArea } from "react-icons/bi";
-import axios from "axios";
-import { usePropertySearchMutation } from "../services/propertyApi";
+import {
+  usePropertyDeleteMutation,
+  usePropertyPreviewMutation,
+  usePropertySearchMutation,
+} from "../services/propertyApi";
 import { useDebounce } from "../utils/useDebounce";
-
-const API_BASE_URL = "http://localhost:5000/api/listings";
 
 function ListingList() {
   const navigate = useNavigate();
   const [propertySearch, { data }] = usePropertySearchMutation();
+  const [propertyPreview] = usePropertyPreviewMutation();
+  const [propertyDelete] = usePropertyDeleteMutation();
   const [listings, setListings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -45,54 +48,73 @@ function ListingList() {
   });
 
   useEffect(() => {
-    const fetchListings = async () => {
-      try {
-        setLoading(true);
-        const data = {
-          filters: {
-            status: null,
-            location: null,
-            type: null,
-            agent_email: null,
-          },
-          search: debouncedSearch.trim() || null,
-          client_id: 1,
-          title: null,
-          location_search: null,
-          last_property_id: null,
-          limit: 20,
-        };
-        const res = await propertySearch(data).unwrap();
-        setListings(res?.data || []);
-      } catch (err) {
-        setError("Failed to load listings. Please try again later.");
-        console.error("Error fetching listings:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
     fetchListings();
   }, [debouncedSearch, propertySearch]);
 
+  const fetchListings = async () => {
+    try {
+      setLoading(true);
+      const data = {
+        filters: {
+          status: null,
+          location: null,
+          type: null,
+          agent_email: null,
+        },
+        search: debouncedSearch.trim() || null,
+        client_id: 1,
+        title: null,
+        location_search: null,
+        last_property_id: null,
+        limit: 20,
+      };
+      const res = await propertySearch(data).unwrap();
+      const sorted = (res?.data || []).slice().sort((a, b) => b.property_id - a.property_id);
+    setListings(sorted);
+    } catch (err) {
+      setError("Failed to load listings. Please try again later.");
+      console.error("Error fetching listings:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleCreate = () => {
-    navigate("/listings/new");
+    navigate("/listings");
   };
 
-  const handleView = (id) => {
-    navigate(`/listings/${id}`);
+  const handleView = async (id) => {
+    try {
+      const res = await propertyPreview({
+        property_id: id,
+        client_id: 1,
+      }).unwrap();
+      console.log(res, "response from preview");
+      navigate("/listings", {
+        state: { propertyPreview: res, isPropertyPreview: true },
+      });
+    } catch (error) {
+      alert("Failed to load listing preview. Please try again.");
+      console.error("Error fetching listing preview:", error);
+    }
   };
 
-  const handleEdit = (id) => {
-    navigate(`/listings/edit/${id}`);
+  const handleEdit = (listing) => {
+    navigate("/listings", {
+      state: { propertyList: listing, isPropertyPreview: false },
+    });
   };
 
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this listing?"))
       return;
-
     try {
-      await axios.delete(`${API_BASE_URL}/${id}`);
-      setListings(listings.filter((listing) => listing._id !== id));
+      const res = await propertyDelete({
+        property_id: id,
+        client_id: 1,
+      }).unwrap();
+      console.log(res, "response from delete");
+      fetchListings();
     } catch (err) {
       alert("Failed to delete listing. Please try again.");
       console.error("Error deleting listing:", err);
@@ -241,7 +263,9 @@ function ListingList() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium mb-1">Min Price</label>
+              <label className="block text-sm font-medium mb-1">
+                Min Price
+              </label>
               <input
                 type="number"
                 name="priceMin"
@@ -253,7 +277,9 @@ function ListingList() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium mb-1">Max Price</label>
+              <label className="block text-sm font-medium mb-1">
+                Max Price
+              </label>
               <input
                 type="number"
                 name="priceMax"
@@ -300,7 +326,7 @@ function ListingList() {
               <tr>
                 <th className="px-6 py-3 text-left text-gray-700">Property</th>
                 <th className="px-6 py-3 text-left text-gray-700">Details</th>
-                <th className="px-6 py-3 text-left text-gray-700">Features</th>
+                <th className="px-6 py-3 text-left text-gray-700">Property Category</th>
                 <th className="px-6 py-3 text-left text-gray-700">Price</th>
                 <th className="px-6 py-3 text-right text-gray-700">Actions</th>
               </tr>
@@ -313,13 +339,13 @@ function ListingList() {
                 >
                   <td className="px-6 py-4">
                     <div className="flex items-center">
-                      {listing.images?.[0] && (
+                      {/* {listing.images?.[0] && (
                         <img
                           src={`http://localhost:5000/uploads/${listing.images[0]}`}
                           className="w-16 h-16 rounded object-cover mr-4"
                           alt="Property"
                         />
-                      )}
+                      )} */}
                       <div>
                         <div className="font-medium text-gray-800">
                           {listing?.title}
@@ -353,7 +379,7 @@ function ListingList() {
                   </td>
                   <td className="px-6 py-4">
                     <div className="flex flex-wrap gap-2">
-                      {listing.features?.slice(0, 3).map((feature, i) => (
+                      {/* {listing.features?.slice(0, 3).map((feature, i) => (
                         <div
                           key={i}
                           className="flex items-center text-xs bg-gray-100 rounded-full px-2 py-1"
@@ -361,12 +387,12 @@ function ListingList() {
                           {renderFeatureIcon(feature)}
                           <span className="ml-1 text-gray-700">{feature}</span>
                         </div>
-                      ))}
-                      {listing.features?.length > 3 && (
+                      ))} */}
+                      {/* {listing.features?.length > 3 && ( */}
                         <div className="text-xs bg-gray-200 rounded-full px-2 py-1 text-gray-700">
-                          +{listing.features.length - 3} more
+                          {listing?.property_category}
                         </div>
-                      )}
+                      {/* )} */}
                     </div>
                   </td>
                   <td className="px-6 py-4 font-medium text-gray-800">
@@ -385,7 +411,7 @@ function ListingList() {
                         <FiEye />
                       </button>
                       <button
-                        onClick={() => handleEdit(listing?.property_id)}
+                        onClick={() => handleEdit(listing)}
                         className="text-yellow-600 hover:text-yellow-500 transition-colors"
                         title="Edit"
                       >
@@ -410,17 +436,13 @@ function ListingList() {
       {/* Pagination */}
       {listings?.length > 0 && (
         <div className="mt-4 flex justify-between items-center">
-          <button
-            className="flex items-center px-3 py-1 border rounded disabled:opacity-50 bg-gray-100 hover:bg-gray-200 transition-colors"
-          >
+          <button className="flex items-center px-3 py-1 border rounded disabled:opacity-50 bg-gray-100 hover:bg-gray-200 transition-colors">
             <FiChevronLeft className="mr-1" /> Previous
           </button>
           <span className="text-sm text-gray-600">
             Page {currentPage} of {totalPages} | {listings.length} properties
           </span>
-          <button
-            className="flex items-center px-3 py-1 border rounded disabled:opacity-50 bg-gray-100 hover:bg-gray-200 transition-colors"
-          >
+          <button className="flex items-center px-3 py-1 border rounded disabled:opacity-50 bg-gray-100 hover:bg-gray-200 transition-colors">
             Next <FiChevronRight className="ml-1" />
           </button>
         </div>

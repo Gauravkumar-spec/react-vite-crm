@@ -19,7 +19,34 @@ export const propertyApi = createApi({
         body: data,
       }),
     }),
+    propertyPreview: builder.mutation({
+      query: (data) => ({
+        url: "propertyPreview",
+        method: "POST",
+        body: data,
+      }),
+    }),
+    propertyUpdate: builder.mutation({
+      query: (data) => ({
+        url: "propertyUpdate",
+        method: "POST",
+        body: data,
+      }),
+    }),
+    propertyDelete: builder.mutation({
+      query: (data) => ({
+        url: "propertyDelete",
+        method: "POST",
+        body: data,
+      }),
+    }),
   }),
 });
 
-export const { useSetPropertyMutation, usePropertySearchMutation } = propertyApi;
+export const {
+  useSetPropertyMutation,
+  usePropertySearchMutation,
+  usePropertyPreviewMutation,
+  usePropertyUpdateMutation,
+  usePropertyDeleteMutation,
+} = propertyApi;
