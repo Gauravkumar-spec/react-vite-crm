@@ -1,17 +1,17 @@
 import { useState } from "react";
-import { FaBars, FaHome, FaUsers, FaCog, FaTimes } from "react-icons/fa";
+import {  FaBars, FaBullhorn, FaClipboardList, FaCog, FaHome, FaListAlt, FaTimes, FaUserFriends, FaUsers, FaUserTie } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 export default function Sidebar() {
-  // Large screen sidebar expanded/collapsed
-  const [open, setOpen] = useState(false);
-  // Mobile sidebar open/close
+  // Desktop sidebar expanded/collapsed state
+  const [open, setOpen] = useState(true);
+  // Mobile sidebar open/close state
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
     <>
       {/* Mobile hamburger button */}
-      <div className="fixed top-4 left-4 z-50 lg:hidden">
+      <div className="fixed top-0 left-0 position-absolute">
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
           className="text-2xl text-black dark:text-white focus:outline-none"
@@ -24,22 +24,18 @@ export default function Sidebar() {
       {/* Sidebar */}
       <div
         className={`
-          fixed top-0 left-0 h-screen p-5 pt-8 shadow-md bg-white text-black dark:bg-gray-900 dark:text-white
+          fixed top-0 left-0 h-screen p-5 pt-8 shadow-md bg-white text-black dark:bg-gray-950 dark:text-white
           transition-all duration-300 ease-in-out z-40
 
           /* Desktop width */
-          w-${open ? "64" : "20"}
+          ${open ? "w-64" : "w-20"}
 
           /* Mobile slide */
-          transform
-          ${mobileOpen ? "translate-x-0" : "-translate-x-full"}
+          transform ${mobileOpen ? "translate-x-0" : "-translate-x-full"}
 
-          /* Desktop: always visible, static position */
+          /* Desktop: always visible */
           lg:translate-x-0 lg:static lg:block
         `}
-        style={{
-          width: open ? "16rem" : "5rem", // 64*0.25=16rem, 20*0.25=5rem
-        }}
       >
         <div className="flex justify-between items-center">
           {/* Show title only if open or mobile menu open */}
@@ -58,7 +54,7 @@ export default function Sidebar() {
         </div>
 
         <ul className="mt-8 space-y-4">
-          <Link to="/dashboard" onClick={() => setMobileOpen(false)}>
+          <Link to="/" onClick={() => setMobileOpen(false)}>
             <li className="flex items-center gap-4 cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700 p-2 rounded">
               <FaHome />
               {(open || mobileOpen) && <span>Dashboard</span>}
@@ -67,21 +63,21 @@ export default function Sidebar() {
 
           <Link to="/listings" onClick={() => setMobileOpen(false)}>
             <li className="flex items-center gap-4 cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700 p-2 rounded">
-              <FaUsers />
+              <FaClipboardList />
               {(open || mobileOpen) && <span>Listings</span>}
             </li>
           </Link>
 
           <Link to="/listinglist" onClick={() => setMobileOpen(false)}>
             <li className="flex items-center gap-4 cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700 p-2 rounded">
-              <FaUsers />
+              <FaListAlt />
               {(open || mobileOpen) && <span>Listing list</span>}
             </li>
           </Link>
 
           <Link to="/agent" onClick={() => setMobileOpen(false)}>
             <li className="flex items-center gap-4 cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700 p-2 rounded">
-              <FaUsers />
+              <FaUserTie />
               {(open || mobileOpen) && <span>Agents</span>}
             </li>
           </Link>
@@ -95,14 +91,14 @@ export default function Sidebar() {
 
           <Link to="/lead" onClick={() => setMobileOpen(false)}>
             <li className="flex items-center gap-4 cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700 p-2 rounded">
-              <FaUsers />
+              <FaBullhorn />
               {(open || mobileOpen) && <span>Leads</span>}
             </li>
           </Link>
 
           <Link to="/leadlist" onClick={() => setMobileOpen(false)}>
             <li className="flex items-center gap-4 cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700 p-2 rounded">
-              <FaUsers />
+              <FaUserFriends />
               {(open || mobileOpen) && <span>Lead List</span>}
             </li>
           </Link>
@@ -116,7 +112,7 @@ export default function Sidebar() {
         </ul>
       </div>
 
-      {/* Overlay for mobile when sidebar is open */}
+      {/* Overlay for mobile sidebar open */}
       {mobileOpen && (
         <div
           className="fixed inset-0 bg-black bg-opacity-50 z-30 lg:hidden"

@@ -126,20 +126,20 @@ const Leads = () => {
     }
   };
 
-  return (
-    <div className="min-h-screen bg-gray-900 py-8 px-4 sm:px-6 lg:px-8">
+   return (
+    <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
       <ToastContainer />
       <div className="max-w-3xl mx-auto">
         <div className="text-center mb-8">
-          <h2 className="text-3xl font-extrabold text-blue-400">
+          <h2 className="text-3xl font-extrabold text-gray-900">
             New Lead Capture
           </h2>
-          <p className="mt-2 text-lg text-gray-300">
+          <p className="mt-2 text-lg text-gray-600">
             Fill in the details below to add a new lead
           </p>
         </div>
 
-        <div className="bg-gray-800 shadow-xl rounded-lg p-6 sm:p-8 border border-gray-700">
+        <div className="bg-white shadow-lg rounded-lg p-6 sm:p-8 border border-gray-200">
           <Formik
             initialValues={initialValues}
             validationSchema={leadValidationSchema}
@@ -152,7 +152,7 @@ const Leads = () => {
                   <div className="sm:col-span-2">
                     <label
                       htmlFor="name"
-                      className="block text-sm font-medium text-blue-300"
+                      className="block text-sm font-medium text-gray-800"
                     >
                       <FiUser className="inline mr-2" />
                       Full Name
@@ -161,21 +161,22 @@ const Leads = () => {
                       <Field
                         type="text"
                         name="name"
-                        className="py-3 px-4 block w-full shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 border-gray-600 rounded-md bg-gray-700 text-white placeholder-gray-400"
+                        className="py-3 px-4 block w-full border border-gray-300 rounded-md bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400"
+                        placeholder="John Doe"
                       />
                     </div>
                     <ErrorMessage
                       name="name"
                       component="div"
-                      className="text-red-400 text-sm mt-1"
+                      className="text-red-500 text-sm mt-1"
                     />
                   </div>
 
-                  {/* Contact Information */}
+                  {/* Mobile */}
                   <div>
                     <label
                       htmlFor="mobile"
-                      className="block text-sm font-medium text-blue-300"
+                      className="block text-sm font-medium text-gray-800"
                     >
                       <FiPhone className="inline mr-2" />
                       Mobile Number
@@ -184,21 +185,22 @@ const Leads = () => {
                       <Field
                         type="tel"
                         name="mobile"
-                        id="mobile"
-                        className="py-3 px-4 block w-full shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 border-gray-600 rounded-md bg-gray-700 text-white placeholder-gray-400"
+                        className="py-3 px-4 block w-full border border-gray-300 rounded-md bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400"
+                        placeholder="+1 123 456 7890"
                       />
                     </div>
                     <ErrorMessage
                       name="mobile"
                       component="div"
-                      className="text-red-400 text-sm mt-1"
+                      className="text-red-500 text-sm mt-1"
                     />
                   </div>
 
+                  {/* Email */}
                   <div>
                     <label
                       htmlFor="email"
-                      className="block text-sm font-medium text-blue-300"
+                      className="block text-sm font-medium text-gray-800"
                     >
                       <FiMail className="inline mr-2" />
                       Email Address
@@ -207,21 +209,22 @@ const Leads = () => {
                       <Field
                         type="email"
                         name="email"
-                        className="py-3 px-4 block w-full shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 border-gray-600 rounded-md bg-gray-700 text-white placeholder-gray-400"
+                        className="py-3 px-4 block w-full border border-gray-300 rounded-md bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400"
+                        placeholder="email@example.com"
                       />
                     </div>
                     <ErrorMessage
                       name="email"
                       component="div"
-                      className="text-red-400 text-sm mt-1"
+                      className="text-red-500 text-sm mt-1"
                     />
                   </div>
 
-                  {/* Property Details */}
+                  {/* Requirement */}
                   <div>
                     <label
                       htmlFor="requirement"
-                      className="block text-sm font-medium text-blue-300"
+                      className="block text-sm font-medium text-gray-800"
                     >
                       <FiHome className="inline mr-2" />
                       Requirement
@@ -230,20 +233,22 @@ const Leads = () => {
                       <Field
                         type="text"
                         name="requirement"
-                        className="py-3 px-4 block w-full shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 border-gray-600 rounded-md bg-gray-700 text-white placeholder-gray-400"
+                        className="py-3 px-4 block w-full border border-gray-300 rounded-md bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400"
+                        placeholder="Looking for a 2BHK apartment"
                       />
                     </div>
                     <ErrorMessage
                       name="requirement"
                       component="div"
-                      className="text-red-400 text-sm mt-1"
+                      className="text-red-500 text-sm mt-1"
                     />
                   </div>
 
+                  {/* Property Type */}
                   <div>
                     <label
                       htmlFor="propertyType"
-                      className="block text-sm font-medium text-blue-300"
+                      className="block text-sm font-medium text-gray-800"
                     >
                       <FiHome className="inline mr-2" />
                       Property Type
@@ -252,17 +257,13 @@ const Leads = () => {
                       <Field
                         as="select"
                         name="propertyType"
-                        className="py-3 px-4 block w-full shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 border-gray-600 rounded-md bg-gray-700 text-white"
+                        className="py-3 px-4 block w-full border border-gray-300 rounded-md bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400"
                       >
-                        <option value="" className="bg-gray-800">
+                        <option value="">
                           {isLoadingDropdowns ? "Loading..." : "Select property type"}
                         </option>
                         {propertyType.map((type) => (
-                          <option 
-                            key={type?.id} 
-                            value={type?.name} 
-                            className="bg-gray-800"
-                          >
+                          <option key={type?.id} value={type?.name}>
                             {type?.name}
                           </option>
                         ))}
@@ -271,66 +272,61 @@ const Leads = () => {
                     <ErrorMessage
                       name="propertyType"
                       component="div"
-                      className="text-red-400 text-sm mt-1"
+                      className="text-red-500 text-sm mt-1"
                     />
                   </div>
 
-                  {/* Budget Range */}
+                  {/* Budget Min */}
                   <div>
                     <label
                       htmlFor="budgetMin"
-                      className="block text-sm font-medium text-blue-300"
+                      className="block text-sm font-medium text-gray-800"
                     >
                       <FiDollarSign className="inline mr-2" />
                       Minimum Budget
                     </label>
-                    <div className="mt-1 relative rounded-md shadow-sm">
+                    <div className="mt-1 relative rounded-md">
                       <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                         <span className="text-gray-400 sm:text-sm">$</span>
                       </div>
                       <Field
                         type="number"
                         name="budgetMin"
-                        // id="budgetMin"
-                        // value={lead.budgetMin}
-                        // onChange={handleChange}
-                        className="py-3 pl-7 pr-4 block w-full focus:ring-2 focus:ring-blue-500 focus:border-blue-500 border-gray-600 rounded-md bg-gray-700 text-white placeholder-gray-400"
+                        className="py-3 pl-7 pr-4 block w-full border border-gray-300 rounded-md bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400"
                         placeholder="0.00"
                       />
                     </div>
                     <ErrorMessage
                       name="budgetMin"
                       component="div"
-                      className="text-red-400 text-sm mt-1"
+                      className="text-red-500 text-sm mt-1"
                     />
                   </div>
 
+                  {/* Budget Max */}
                   <div>
                     <label
                       htmlFor="budgetMax"
-                      className="block text-sm font-medium text-blue-300"
+                      className="block text-sm font-medium text-gray-800"
                     >
                       <FiDollarSign className="inline mr-2" />
                       Maximum Budget
                     </label>
-                    <div className="mt-1 relative rounded-md shadow-sm">
+                    <div className="mt-1 relative rounded-md">
                       <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                         <span className="text-gray-400 sm:text-sm">$</span>
                       </div>
                       <Field
                         type="number"
                         name="budgetMax"
-                        // id="budgetMax"
-                        // value={lead.budgetMax}
-                        // onChange={handleChange}
-                        className="py-3 pl-7 pr-4 block w-full focus:ring-2 focus:ring-blue-500 focus:border-blue-500 border-gray-600 rounded-md bg-gray-700 text-white placeholder-gray-400"
+                        className="py-3 pl-7 pr-4 block w-full border border-gray-300 rounded-md bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400"
                         placeholder="0.00"
                       />
                     </div>
                     <ErrorMessage
                       name="budgetMax"
                       component="div"
-                      className="text-red-400 text-sm mt-1"
+                      className="text-red-500 text-sm mt-1"
                     />
                   </div>
 
@@ -338,7 +334,7 @@ const Leads = () => {
                   <div>
                     <label
                       htmlFor="location"
-                      className="block text-sm font-medium text-blue-300"
+                      className="block text-sm font-medium text-gray-800"
                     >
                       <FiMapPin className="inline mr-2" />
                       Preferred Location
@@ -347,24 +343,22 @@ const Leads = () => {
                       <Field
                         type="text"
                         name="location"
-                        // id="location"
-                        // value={lead.location}
-                        // onChange={handleChange}
-                        className="py-3 px-4 block w-full shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 border-gray-600 rounded-md bg-gray-700 text-white placeholder-gray-400"
+                        className="py-3 px-4 block w-full border border-gray-300 rounded-md bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400"
+                        placeholder="City, Area"
                       />
                     </div>
                     <ErrorMessage
                       name="location"
                       component="div"
-                      className="text-red-400 text-sm mt-1"
+                      className="text-red-500 text-sm mt-1"
                     />
                   </div>
 
-                  {/* Follow-up and Source */}
+                  {/* Follow-up Date */}
                   <div>
                     <label
                       htmlFor="followUpDate"
-                      className="block text-sm font-medium text-blue-300"
+                      className="block text-sm font-medium text-gray-800"
                     >
                       <FiCalendar className="inline mr-2" />
                       Follow-up Date
@@ -373,23 +367,21 @@ const Leads = () => {
                       <Field
                         type="date"
                         name="followUpDate"
-                        // id="followUpDate"
-                        // value={lead.followUpDate}
-                        // onChange={handleChange}
-                        className="py-3 px-4 block w-full shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 border-gray-600 rounded-md bg-gray-700 text-white"
+                        className="py-3 px-4 block w-full border border-gray-300 rounded-md bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400"
                       />
                     </div>
                     <ErrorMessage
                       name="followUpDate"
                       component="div"
-                      className="text-red-400 text-sm mt-1"
+                      className="text-red-500 text-sm mt-1"
                     />
                   </div>
 
+                  {/* Lead Source */}
                   <div>
                     <label
                       htmlFor="source"
-                      className="block text-sm font-medium text-blue-300"
+                      className="block text-sm font-medium text-gray-800"
                     >
                       <FiGlobe className="inline mr-2" />
                       Lead Source
@@ -399,17 +391,13 @@ const Leads = () => {
                         as="select"
                         name="source"
                         disabled={isLoadingDropdowns}
-                        className="py-3 px-4 block w-full shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 border-gray-600 rounded-md bg-gray-700 text-white"
+                        className="py-3 px-4 block w-full border border-gray-300 rounded-md bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400"
                       >
-                        <option value="" className="bg-gray-800">
+                        <option value="">
                           {isLoadingDropdowns ? "Loading..." : "Select source"}
                         </option>
                         {leadSource.map((source) => (
-                          <option 
-                            key={source?.id} 
-                            value={source?.name} 
-                            className="bg-gray-800"
-                          >
+                          <option key={source?.id} value={source?.name}>
                             {source?.name}
                           </option>
                         ))}
@@ -418,7 +406,7 @@ const Leads = () => {
                     <ErrorMessage
                       name="source"
                       component="div"
-                      className="text-red-400 text-sm mt-1"
+                      className="text-red-500 text-sm mt-1"
                     />
                   </div>
 
@@ -426,7 +414,7 @@ const Leads = () => {
                   <div className="sm:col-span-2">
                     <label
                       htmlFor="notes"
-                      className="block text-sm font-medium text-blue-300"
+                      className="block text-sm font-medium text-gray-800"
                     >
                       <FiFileText className="inline mr-2" />
                       Additional Notes
@@ -434,18 +422,16 @@ const Leads = () => {
                     <div className="mt-1">
                       <Field
                         as="textarea"
-                        // id="notes"
                         name="notes"
                         rows={4}
-                        // value={lead.notes}
-                        // onChange={handleChange}
-                        className="py-3 px-4 block w-full shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 border-gray-600 rounded-md bg-gray-700 text-white placeholder-gray-400"
+                        className="py-3 px-4 block w-full border border-gray-300 rounded-md bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400"
+                        placeholder="Any notes..."
                       />
                     </div>
                     <ErrorMessage
                       name="notes"
                       component="div"
-                      className="text-red-400 text-sm mt-1"
+                      className="text-red-500 text-sm mt-1"
                     />
                   </div>
                 </div>
@@ -454,7 +440,7 @@ const Leads = () => {
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className={`inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 ${
+                    className={`inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-400 ${
                       isSubmitting ? "opacity-75 cursor-not-allowed" : ""
                     }`}
                   >

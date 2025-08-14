@@ -110,10 +110,10 @@ const LeadList = () => {
       </div>
     );
   }
-
-  return (
+return (
     <div className="bg-gray-50 min-h-screen p-6">
       <div className="max-w-7xl mx-auto">
+        {/* Header */}
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900">Lead Management</h1>
           <p className="mt-1 text-gray-600">
@@ -121,7 +121,9 @@ const LeadList = () => {
           </p>
         </div>
 
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden mb-6">
+        {/* Search & Table Container */}
+        <div className="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden mb-6">
+          {/* Search */}
           <div className="p-4 border-b border-gray-200">
             <div className="relative max-w-md">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -132,11 +134,10 @@ const LeadList = () => {
                 placeholder="Search leads by name, phone, or email"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg leading-5 bg-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400 sm:text-sm transition-shadow duration-150"
               />
             </div>
 
-            {/* Show search status */}
             {debouncedSearch && (
               <div className="mt-2 text-sm text-gray-500">
                 Searching for: "{debouncedSearch}"
@@ -144,77 +145,41 @@ const LeadList = () => {
             )}
           </div>
 
+          {/* Table */}
           <div className="overflow-x-auto">
             <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
+              <thead className="bg-gray-100">
                 <tr>
-                  <th
-                    scope="col"
-                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                  >
-                    <div className="flex items-center">
-                      <FiUser className="mr-2" /> Name
-                    </div>
-                  </th>
-                  <th
-                    scope="col"
-                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                  >
-                    <div className="flex items-center">
-                      <FiPhone className="mr-2" /> Contact
-                    </div>
-                  </th>
-                  <th
-                    scope="col"
-                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                  >
-                    <div className="flex items-center">
-                      <FiHome className="mr-2" /> Property
-                    </div>
-                  </th>
-                  <th
-                    scope="col"
-                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                  >
-                    <div className="flex items-center">
-                      <FiDollarSign className="mr-2" /> Budget
-                    </div>
-                  </th>
-                  <th
-                    scope="col"
-                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                  >
-                    <div className="flex items-center">
-                      <FiMapPin className="mr-2" /> Location
-                    </div>
-                  </th>
-                  <th
-                    scope="col"
-                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                  >
-                    <div className="flex items-center">
-                      <FiCalendar className="mr-2" /> Follow-up
-                    </div>
-                  </th>
-                  <th
-                    scope="col"
-                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                  >
-                    Source
-                  </th>
+                  {["Name", "Contact", "Property", "Budget", "Location", "Follow-up", "Source"].map((title, idx) => (
+                    <th
+                      key={idx}
+                      scope="col"
+                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    >
+                      {title === "Name" && <div className="flex items-center"><FiUser className="mr-2" /> Name</div>}
+                      {title === "Contact" && <div className="flex items-center"><FiPhone className="mr-2" /> Contact</div>}
+                      {title === "Property" && <div className="flex items-center"><FiHome className="mr-2" /> Property</div>}
+                      {title === "Budget" && <div className="flex items-center"><FiDollarSign className="mr-2" /> Budget</div>}
+                      {title === "Location" && <div className="flex items-center"><FiMapPin className="mr-2" /> Location</div>}
+                      {title === "Follow-up" && <div className="flex items-center"><FiCalendar className="mr-2" /> Follow-up</div>}
+                      {title === "Source" && title}
+                    </th>
+                  ))}
                 </tr>
               </thead>
+
               <tbody className="bg-white divide-y divide-gray-200">
                 {leads.length > 0 ? (
-                  leads.map((lead) => (
+                  leads.map((lead, index) => (
                     <tr
                       key={lead?.lead_id}
-                      className="hover:bg-gray-50 transition-colors duration-150"
+                      className={`transition-all duration-200 hover:shadow-lg hover:bg-gray-50 ${index % 2 === 0 ? "bg-white" : "bg-gray-50"}`}
                     >
+                      {/* Name */}
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="flex items-center">
-                          <div className="flex-shrink-0 h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center">
-                            <span className="text-blue-600 font-medium">
+                          <div className="flex-shrink-0 h-10 w-10 rounded-full bg-indigo-100 flex items-center justify-center shadow-inner">
+                            <span className="text-indigo-600 font-medium">
                               {lead.name?.charAt(0).toUpperCase() || "?"}
                             </span>
                           </div>
@@ -228,30 +193,34 @@ const LeadList = () => {
                           </div>
                         </div>
                       </td>
+
+                      {/* Contact */}
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm text-gray-900">
-                          {lead.mobile || "N/A"}
-                        </div>
+                        <div className="text-sm text-gray-900">{lead.mobile || "N/A"}</div>
                         <div className="text-sm text-gray-500 flex items-center">
                           <FiMail className="mr-1" /> {lead.email || "N/A"}
                         </div>
                       </td>
+
+                      {/* Property */}
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm text-gray-900 capitalize">
-                          {lead?.property_type?.toLowerCase() || "N/A"}
-                        </div>
+                        <div className="text-sm text-gray-900 capitalize">{lead?.property_type || "N/A"}</div>
                       </td>
+
+                      {/* Budget */}
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="text-sm text-gray-900">
                           {lead?.budget_min ? `$${lead?.budget_min}` : "N/A"}
                           {lead?.budget_max ? ` - $${lead?.budget_max}` : ""}
                         </div>
                       </td>
+
+                      {/* Location */}
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm text-gray-900">
-                          {lead?.preferred_location || "N/A"}
-                        </div>
+                        <div className="text-sm text-gray-900">{lead?.preferred_location || "N/A"}</div>
                       </td>
+
+                      {/* Follow-up */}
                       <td className="px-6 py-4 whitespace-nowrap">
                         <span
                           className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
@@ -264,6 +233,8 @@ const LeadList = () => {
                           {formatDate(lead?.follow_up_date)}
                         </span>
                       </td>
+
+                      {/* Source */}
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                         {lead?.source || "N/A"}
                       </td>
@@ -291,16 +262,17 @@ const LeadList = () => {
           </div>
         </div>
 
+        {/* Pagination */}
         <div className="flex items-center justify-between text-sm text-gray-500">
           <div>
             Showing <span className="font-medium">{leads?.length}</span> leads
             {debouncedSearch && <span> matching "{debouncedSearch}"</span>}
           </div>
           <div className="flex space-x-4">
-            <button className="px-3 py-1 border rounded-md bg-white hover:bg-gray-50">
+            <button className="px-3 py-1 border rounded-lg bg-white hover:bg-gray-100 shadow-sm transition">
               Previous
             </button>
-            <button className="px-3 py-1 border rounded-md bg-white hover:bg-gray-50">
+            <button className="px-3 py-1 border rounded-lg bg-white hover:bg-gray-100 shadow-sm transition">
               Next
             </button>
           </div>

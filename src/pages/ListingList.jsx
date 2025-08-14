@@ -44,7 +44,6 @@ function ListingList() {
     location: "",
   });
 
-
   useEffect(() => {
     const fetchListings = async () => {
       try {
@@ -68,7 +67,6 @@ function ListingList() {
       } catch (err) {
         setError("Failed to load listings. Please try again later.");
         console.error("Error fetching listings:", err);
-        setListings(res?.data || []);
       } finally {
         setLoading(false);
       }
@@ -76,22 +74,18 @@ function ListingList() {
     fetchListings();
   }, [debouncedSearch, propertySearch]);
 
-  // Create - Navigate to new listing form
   const handleCreate = () => {
     navigate("/listings/new");
   };
 
-  // Read - Navigate to listing details
   const handleView = (id) => {
     navigate(`/listings/${id}`);
   };
 
-  // Update - Navigate to edit form
   const handleEdit = (id) => {
     navigate(`/listings/edit/${id}`);
   };
 
-  // Delete - Remove a listing
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this listing?"))
       return;
@@ -99,24 +93,21 @@ function ListingList() {
     try {
       await axios.delete(`${API_BASE_URL}/${id}`);
       setListings(listings.filter((listing) => listing._id !== id));
-      // Show success message or refresh data if needed
     } catch (err) {
       alert("Failed to delete listing. Please try again.");
       console.error("Error deleting listing:", err);
     }
   };
 
-  // Handle filter changes
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
     setFilters((prev) => ({
       ...prev,
       [name]: value,
     }));
-    setCurrentPage(1); // Reset to first page when filters change
+    setCurrentPage(1);
   };
 
-  // Reset all filters
   const resetFilters = () => {
     setFilters({
       propertyType: "",
@@ -129,7 +120,6 @@ function ListingList() {
     setSearchTerm("");
   };
 
-  // Render feature icons
   const renderFeatureIcon = (feature) => {
     const icons = {
       "Swimming Pool": <FaSwimmingPool className="text-blue-500" />,
@@ -146,7 +136,6 @@ function ListingList() {
     return icons[feature] || <FiStar className="text-gray-400" />;
   };
 
-  // Format price with currency
   const formatPrice = (price) => {
     return new Intl.NumberFormat("en-IN", {
       style: "currency",
@@ -160,9 +149,9 @@ function ListingList() {
     return <div className="text-center py-8 text-red-500">{error}</div>;
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-4 py-8 bg-gray-50 min-h-screen">
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">Property Listings</h1>
+        <h1 className="text-2xl font-bold text-gray-800">Property Listings</h1>
         <button
           onClick={handleCreate}
           className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded flex items-center transition-colors"
@@ -172,14 +161,14 @@ function ListingList() {
       </div>
 
       {/* Search and Filters */}
-      <div className="mb-6 bg-gray-800 p-4 rounded-lg shadow">
+      <div className="mb-6 bg-white p-4 rounded-lg shadow">
         <div className="flex flex-col md:flex-row gap-4">
           <div className="relative flex-grow">
             <FiSearch className="absolute left-3 top-3 text-gray-400" />
             <input
               type="text"
               placeholder="Search properties..."
-              className="pl-10 pr-4 py-2 w-full border rounded bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="pl-10 pr-4 py-2 w-full border rounded bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-indigo-500"
               value={searchTerm}
               onChange={(e) => {
                 setSearchTerm(e.target.value);
@@ -193,7 +182,7 @@ function ListingList() {
           </div>
           <button
             onClick={() => setShowFilters(!showFilters)}
-            className="flex items-center px-4 py-2 border rounded bg-gray-700 hover:bg-gray-600 transition-colors"
+            className="flex items-center px-4 py-2 border rounded bg-gray-100 hover:bg-gray-200 transition-colors"
           >
             <FiFilter className="mr-2" /> Filters
           </button>
@@ -209,7 +198,7 @@ function ListingList() {
                 name="propertyType"
                 value={filters.propertyType}
                 onChange={handleFilterChange}
-                className="w-full p-2 border rounded bg-gray-700"
+                className="w-full p-2 border rounded bg-white"
               >
                 <option value="">All Types</option>
                 <option value="house">House</option>
@@ -227,7 +216,7 @@ function ListingList() {
                 name="listingType"
                 value={filters.listingType}
                 onChange={handleFilterChange}
-                className="w-full p-2 border rounded bg-gray-700"
+                className="w-full p-2 border rounded bg-white"
               >
                 <option value="">All Listings</option>
                 <option value="sale">For Sale</option>
@@ -241,7 +230,7 @@ function ListingList() {
                 name="bedrooms"
                 value={filters.bedrooms}
                 onChange={handleFilterChange}
-                className="w-full p-2 border rounded bg-gray-700"
+                className="w-full p-2 border rounded bg-white"
               >
                 <option value="">Any</option>
                 <option value="1">1+</option>
@@ -252,30 +241,26 @@ function ListingList() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium mb-1">
-                Min Price
-              </label>
+              <label className="block text-sm font-medium mb-1">Min Price</label>
               <input
                 type="number"
                 name="priceMin"
                 placeholder="Min"
                 value={filters.priceMin}
                 onChange={handleFilterChange}
-                className="w-full p-2 border rounded bg-gray-700"
+                className="w-full p-2 border rounded bg-white"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium mb-1">
-                Max Price
-              </label>
+              <label className="block text-sm font-medium mb-1">Max Price</label>
               <input
                 type="number"
                 name="priceMax"
                 placeholder="Max"
                 value={filters.priceMax}
                 onChange={handleFilterChange}
-                className="w-full p-2 border rounded bg-gray-700"
+                className="w-full p-2 border rounded bg-white"
               />
             </div>
 
@@ -287,14 +272,14 @@ function ListingList() {
                 placeholder="City or Area"
                 value={filters.location}
                 onChange={handleFilterChange}
-                className="w-full p-2 border rounded bg-gray-700"
+                className="w-full p-2 border rounded bg-white"
               />
             </div>
 
             <div className="flex items-end">
               <button
                 onClick={resetFilters}
-                className="px-4 py-2 bg-gray-600 hover:bg-gray-500 rounded transition-colors"
+                className="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded transition-colors"
               >
                 Reset Filters
               </button>
@@ -304,27 +289,27 @@ function ListingList() {
       </div>
 
       {/* Listings Table */}
-      <div className="bg-gray-800 rounded-lg shadow overflow-hidden">
+      <div className="bg-white rounded-lg shadow overflow-hidden">
         {listings?.length === 0 ? (
-          <div className="text-center py-8">
+          <div className="text-center py-8 text-gray-600">
             No listings found. Try adjusting your search or filters.
           </div>
         ) : (
-          <table className="min-w-full divide-y divide-gray-700">
-            <thead className="bg-gray-700">
+          <table className="min-w-full divide-y divide-gray-200">
+            <thead className="bg-gray-100">
               <tr>
-                <th className="px-6 py-3 text-left">Property</th>
-                <th className="px-6 py-3 text-left">Details</th>
-                <th className="px-6 py-3 text-left">Features</th>
-                <th className="px-6 py-3 text-left">Price</th>
-                <th className="px-6 py-3 text-right">Actions</th>
+                <th className="px-6 py-3 text-left text-gray-700">Property</th>
+                <th className="px-6 py-3 text-left text-gray-700">Details</th>
+                <th className="px-6 py-3 text-left text-gray-700">Features</th>
+                <th className="px-6 py-3 text-left text-gray-700">Price</th>
+                <th className="px-6 py-3 text-right text-gray-700">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-700">
+            <tbody className="divide-y divide-gray-200">
               {listings?.map((listing) => (
                 <tr
                   key={listing?.property_id}
-                  className="hover:bg-gray-700 transition-colors"
+                  className="hover:bg-gray-50 transition-colors"
                 >
                   <td className="px-6 py-4">
                     <div className="flex items-center">
@@ -336,8 +321,10 @@ function ListingList() {
                         />
                       )}
                       <div>
-                        <div className="font-medium">{listing?.title}</div>
-                        <div className="text-sm text-gray-400 flex items-center">
+                        <div className="font-medium text-gray-800">
+                          {listing?.title}
+                        </div>
+                        <div className="text-sm text-gray-500 flex items-center">
                           <FiMapPin className="mr-1" /> {listing?.location}
                         </div>
                       </div>
@@ -345,11 +332,13 @@ function ListingList() {
                   </td>
                   <td className="px-6 py-4">
                     <div className="text-sm">
-                      <div className="capitalize">{listing?.property_type}</div>
-                      <div className="capitalize text-gray-400">
+                      <div className="capitalize text-gray-800">
                         {listing?.property_type}
                       </div>
-                      <div className="flex items-center mt-2 space-x-4 text-gray-400">
+                      <div className="capitalize text-gray-500">
+                        {listing?.property_type}
+                      </div>
+                      <div className="flex items-center mt-2 space-x-4 text-gray-500">
                         <span className="flex items-center">
                           <FaBed className="mr-1" /> {listing.bedrooms}
                         </span>
@@ -367,44 +356,44 @@ function ListingList() {
                       {listing.features?.slice(0, 3).map((feature, i) => (
                         <div
                           key={i}
-                          className="flex items-center text-xs bg-gray-600 rounded-full px-2 py-1"
+                          className="flex items-center text-xs bg-gray-100 rounded-full px-2 py-1"
                         >
                           {renderFeatureIcon(feature)}
-                          <span className="ml-1">{feature}</span>
+                          <span className="ml-1 text-gray-700">{feature}</span>
                         </div>
                       ))}
                       {listing.features?.length > 3 && (
-                        <div className="text-xs bg-gray-500 rounded-full px-2 py-1">
+                        <div className="text-xs bg-gray-200 rounded-full px-2 py-1 text-gray-700">
                           +{listing.features.length - 3} more
                         </div>
                       )}
                     </div>
                   </td>
-                  <td className="px-6 py-4 font-medium">
+                  <td className="px-6 py-4 font-medium text-gray-800">
                     {formatPrice(listing?.price)}
                     {listing?.property_id === "rent" && (
-                      <span className="text-gray-400 text-sm"> /mo</span>
+                      <span className="text-gray-500 text-sm"> /mo</span>
                     )}
                   </td>
                   <td className="px-6 py-4 text-right">
                     <div className="flex justify-end space-x-2">
                       <button
                         onClick={() => handleView(listing?.property_id)}
-                        className="text-indigo-400 hover:text-indigo-300 transition-colors"
+                        className="text-indigo-600 hover:text-indigo-500 transition-colors"
                         title="View"
                       >
                         <FiEye />
                       </button>
                       <button
                         onClick={() => handleEdit(listing?.property_id)}
-                        className="text-yellow-400 hover:text-yellow-300 transition-colors"
+                        className="text-yellow-600 hover:text-yellow-500 transition-colors"
                         title="Edit"
                       >
                         <FiEdit2 />
                       </button>
                       <button
                         onClick={() => handleDelete(listing?.property_id)}
-                        className="text-red-400 hover:text-red-300 transition-colors"
+                        className="text-red-600 hover:text-red-500 transition-colors"
                         title="Delete"
                       >
                         <FiTrash2 />
@@ -422,19 +411,15 @@ function ListingList() {
       {listings?.length > 0 && (
         <div className="mt-4 flex justify-between items-center">
           <button
-            // onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
-            // disabled={currentPage === 1}
-            className="flex items-center px-3 py-1 border rounded disabled:opacity-50 bg-gray-700 hover:bg-gray-600 transition-colors"
+            className="flex items-center px-3 py-1 border rounded disabled:opacity-50 bg-gray-100 hover:bg-gray-200 transition-colors"
           >
             <FiChevronLeft className="mr-1" /> Previous
           </button>
-          <span className="text-sm">
+          <span className="text-sm text-gray-600">
             Page {currentPage} of {totalPages} | {listings.length} properties
           </span>
           <button
-            // onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
-            // disabled={currentPage === totalPages}
-            className="flex items-center px-3 py-1 border rounded disabled:opacity-50 bg-gray-700 hover:bg-gray-600 transition-colors"
+            className="flex items-center px-3 py-1 border rounded disabled:opacity-50 bg-gray-100 hover:bg-gray-200 transition-colors"
           >
             Next <FiChevronRight className="ml-1" />
           </button>

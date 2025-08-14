@@ -500,7 +500,7 @@ function PropertyListingForm() {
                 className={`w-10 h-10 rounded-full flex items-center justify-center ${
                   currentStep >= step
                     ? "bg-indigo-600 text-white"
-                    : "bg-gray-800 border-2 border-gray-600 text-gray-400"
+                  : "bg-white border-2 border-gray-300 text-gray-500"
                 }`}
               >
                 {currentStep > step ? <FiCheck size={18} /> : step}
@@ -553,7 +553,7 @@ function PropertyListingForm() {
                 {/* Step 1: Property Details */}
                 {currentStep === 1 && (
                   <div className="p-8">
-                    <h2 className="text-2xl font-bold text-gray-100 mb-6">
+                    <h2 className="text-2xl font-bold text-gray-900 mb-6">
                       Property Details
                     </h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -576,7 +576,7 @@ function PropertyListingForm() {
                       </div>
                       {/* Property Type */}
                       <div className="space-y-2">
-                        <label className="block text-sm font-medium text-gray-300 flex items-center">
+                        <label className="block text-sm font-medium text-gray-700 flex items-center">
                           <FiHome className="mr-2" /> Property Type
                         </label>
                         <Field
@@ -647,7 +647,7 @@ function PropertyListingForm() {
                       </div>
                       {/* Location */}
                       <div className="space-y-2 md:col-span-2">
-                        <label className="block text-sm font-medium text-gray-300 flex items-center">
+                        <label className="block text-sm font-medium text-gray-700 flex items-center">
                           <FiMapPin className="mr-2" /> Location
                         </label>
                         <Field
@@ -835,7 +835,7 @@ function PropertyListingForm() {
                       </div>
                       {/* Price */}
                       <div className="space-y-2">
-                        <label className="block text-sm font-medium text-gray-300 flex items-center">
+                        <label className="block text-sm font-medium text-gray-700 flex items-center">
                           <FiDollarSign className="mr-2" /> Price (INR)
                         </label>
                         <Field
@@ -1127,7 +1127,7 @@ function PropertyListingForm() {
                               className={`px-3 py-1 rounded-full text-sm flex items-center ${
                                 values.facilities.includes(facility.name)
                                   ? "bg-indigo-600 text-white border border-indigo-600"
-                                  : "bg-gray-700 text-gray-300 border border-gray-600"
+                                  : "bg-gray-100 text-gray-800 border border-gray-300"
                               }`}
                             >
                               {facility.name}
@@ -1155,7 +1155,7 @@ function PropertyListingForm() {
                       <button
                         type="button"
                         onClick={nextStep}
-                        className="px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors flex items-center"
+                         className="px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors flex items-center"
                       >
                         Next: Add Media <FiPlus className="ml-2" />
                       </button>
@@ -1166,15 +1166,15 @@ function PropertyListingForm() {
                 {/* Step 4: Media Upload */}
                 {currentStep === 4 && (
                   <div className="p-8">
-                    <h2 className="text-2xl font-bold text-gray-100 mb-6">
+                    <h2 className="text-2xl font-bold text-gray-600 mb-6">
                       Media Upload
                     </h2>
                     {/* Images Upload */}
                     <div className="mb-8">
-                      <label className="block text-sm font-medium text-gray-300 mb-3 flex items-center">
+                      <label className="block text-sm font-medium text-gray-500 mb-3 flex items-center">
                         <FiImage className="mr-2" /> Property Images (Max 12)
                       </label>
-                      <div className="border-2 border-dashed border-gray-600 rounded-lg p-6 text-center bg-gray-700/50">
+                      <div className="border-2 border-dashed border-gray-600 rounded-lg p-6 text-center bg-gray-100">
                         <div className="flex flex-col items-center justify-center">
                           <FiUpload className="w-10 h-10 text-gray-400 mb-3" />
                           <p className="text-sm text-gray-400">
@@ -1197,7 +1197,7 @@ function PropertyListingForm() {
                         />
                         <label
                           htmlFor="image-upload"
-                          className="mt-4 inline-block px-4 py-2 bg-gray-700 text-gray-300 rounded-md hover:bg-gray-600 cursor-pointer border border-gray-600"
+                          className="mt-4 inline-block px-4 py-2 bg-gray-200 text-gray-500 rounded-md hover:bg-gray-300 cursor-pointer border border-gray-600"
                         >
                           Select Images
                         </label>
@@ -1274,7 +1274,7 @@ function PropertyListingForm() {
                       <button
                         type="button"
                         onClick={prevStep}
-                        className="px-6 py-3 border border-gray-600 text-gray-300 rounded-lg hover:bg-gray-700 transition-colors"
+                        className="px-6 py-3 border border-gray-500 text-gray-600 rounded-lg hover:bg-gray-200 transition-colors"
                       >
                         Back
                       </button>
@@ -1286,6 +1286,32 @@ function PropertyListingForm() {
                         Next: Review & Submit <FiCheck className="ml-2" />
                       </button>
                     </div>
+
+                    {/* <div>
+                      <h3 className="text-lg font-semibold text-gray-100 mb-4 pb-2 border-b border-gray-700">Contact Information</h3>
+                      <div className="space-y-4">
+                        <div>
+                          <p className="text-sm text-gray-400">Contact Type</p>
+                          <p className="font-medium text-gray-200">{formData.contactType || 'Not specified'}</p>
+                        </div>
+                        <div>
+                          <p className="text-sm text-gray-400">Contact Name</p>
+                          <p className="font-medium text-gray-200">{formData.contactName || 'Not specified'}</p>
+                        </div>
+                        <div>
+                          <p className="text-sm text-gray-400">Email</p>
+                          <p className="font-medium text-gray-200">{formData.contactEmail || 'Not specified'}</p>
+                        </div>
+                        <div>
+                          <p className="text-sm text-gray-400">Phone</p>
+                          <p className="font-medium text-gray-200">{formData.contactPhone || 'Not specified'}</p>
+                        </div>
+                        <div>
+                          <p className="text-sm text-gray-400">Availability</p>
+                          <p className="font-medium text-gray-200">{formData.availability || 'Not specified'}</p>
+                        </div>
+                      </div>
+                    </div> */}
                   </div>
                 )}
 
