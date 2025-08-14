@@ -1,7 +1,8 @@
 import { useState, useRef } from "react";
 import axios from "axios";
-import { Field, Form, Formik } from "formik";
+import { ErrorMessage, Field, Form, Formik } from "formik";
 import { useSetAgentMutation } from "../services/agentApi";
+import { agentValidationSchema } from "../utils/validationSchemas/agentSchema";
 
 function Agent() {
   const [setAgent] = useSetAgentMutation();
@@ -25,11 +26,11 @@ function Agent() {
   const initialValues = {
     name: "",
     email: "",
-    phone: "",
+    mobile: "",
     address: "",
     city: "",
     area: "",
-    image: "",
+    profile: "",
   };
 
   const [image, setImage] = useState(null);
@@ -97,12 +98,12 @@ function Agent() {
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     try {
       let imageUrl = "";
-      if (values.image) {
+      if (values.profile) {
         imageUrl = await new Promise((resolve, reject) => {
           const reader = new FileReader();
           reader.onloadend = () => resolve(reader.result); // Base64 string
           reader.onerror = reject;
-          reader.readAsDataURL(values.image);
+          reader.readAsDataURL(values.profile);
         });
       }
 
@@ -110,14 +111,14 @@ function Agent() {
         client_id: 1,
         name: values.name,
         email: values.email,
-        mobile: values.phone,
+        mobile: values.mobile,
         address: values.address,
         city: values.city,
         area: values.area,
         profile_photo_url: imageUrl, // send Base64 as URL
       };
+      console.log(payload);
       const res = await setAgent(payload).unwrap();
-      console.log(payload,res)
       resetForm();
       setCurrentStep(1);
 
@@ -275,7 +276,11 @@ function Agent() {
             )}
 
             {/* Multi-step form */}
-            <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+            <Formik
+              initialValues={initialValues}
+              validationSchema={agentValidationSchema}
+              onSubmit={handleSubmit}
+            >
               {({ isSubmitting, values, setFieldValue }) => (
                 <Form>
                   {/* Step 1: Personal Information */}
@@ -293,11 +298,13 @@ function Agent() {
                           <Field
                             type="text"
                             name="name"
-                            // value={formData.name}
-                            // onChange={handleChange}
                             placeholder="John Doe"
-                            // required
                             className="w-full px-4 py-3 bg-gray-700/50 border border-gray-600/50 rounded-lg text-gray-200 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 transition-all"
+                          />
+                          <ErrorMessage
+                            name="name"
+                            component="div"
+                            className="text-red-400 text-sm mt-1"
                           />
                         </div>
 
@@ -308,11 +315,13 @@ function Agent() {
                           <Field
                             type="email"
                             name="email"
-                            // value={formData.email}
-                            // onChange={handleChange}
                             placeholder="john@example.com"
-                            // required
                             className="w-full px-4 py-3 bg-gray-700/50 border border-gray-600/50 rounded-lg text-gray-200 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 transition-all"
+                          />
+                          <ErrorMessage
+                            name="email"
+                            component="div"
+                            className="text-red-400 text-sm mt-1"
                           />
                         </div>
 
@@ -325,12 +334,14 @@ function Agent() {
                           </label>
                           <Field
                             type="mobile"
-                            name="phone"
-                            // value={formData.phone}
-                            // onChange={handleChange}
+                            name="mobile"
                             placeholder="+1 (123) 456-7890"
-                            // required
                             className="w-full px-4 py-3 bg-gray-700/50 border border-gray-600/50 rounded-lg text-gray-200 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 transition-all"
+                          />
+                          <ErrorMessage
+                            name="mobile"
+                            component="div"
+                            className="text-red-400 text-sm mt-1"
                           />
                         </div>
 
@@ -341,11 +352,13 @@ function Agent() {
                           <Field
                             type="text"
                             name="address"
-                            // value={formData.phone}
-                            // onChange={handleChange}
                             placeholder="address"
-                            // required
                             className="w-full px-4 py-3 bg-gray-700/50 border border-gray-600/50 rounded-lg text-gray-200 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 transition-all"
+                          />
+                          <ErrorMessage
+                            name="address"
+                            component="div"
+                            className="text-red-400 text-sm mt-1"
                           />
                         </div>
                         <div>
@@ -355,11 +368,13 @@ function Agent() {
                           <Field
                             type="text"
                             name="city"
-                            // value={formData.phone}
-                            // onChange={handleChange}
                             placeholder="city"
-                            // required
                             className="w-full px-4 py-3 bg-gray-700/50 border border-gray-600/50 rounded-lg text-gray-200 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 transition-all"
+                          />
+                          <ErrorMessage
+                            name="city"
+                            component="div"
+                            className="text-red-400 text-sm mt-1"
                           />
                         </div>
                         <div>
@@ -369,11 +384,13 @@ function Agent() {
                           <Field
                             type="text"
                             name="area"
-                            // value={formData.phone}
-                            // onChange={handleChange}
                             placeholder="area"
-                            // required
                             className="w-full px-4 py-3 bg-gray-700/50 border border-gray-600/50 rounded-lg text-gray-200 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 transition-all"
+                          />
+                          <ErrorMessage
+                            name="area"
+                            component="div"
+                            className="text-red-400 text-sm mt-1"
                           />
                         </div>
 
@@ -435,9 +452,9 @@ function Agent() {
                           type="button"
                           onClick={() => setCurrentStep(2)}
                           className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors flex items-center"
-                          // disabled={
-                          //   !formData.name || !formData.email || !formData.phone
-                          // }
+                          disabled={
+                            !values.name || !values.email || !values.mobile || !values.address || !values.city || !values.area
+                          }
                         >
                           Next
                           <svg
@@ -666,18 +683,18 @@ function Agent() {
                           <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-6">
                             <div
                               className={`relative w-32 h-32 rounded-full overflow-hidden border-2 ${
-                                values.image
+                                values.profile
                                   ? "border-blue-500"
                                   : "border-dashed border-gray-600"
                               } bg-gray-700/50 flex items-center justify-center cursor-pointer`}
                               onClick={() => fileInputRef.current?.click()}
                             >
-                              {values.image ? (
+                              {values.profile ? (
                                 <img
                                   src={
-                                    typeof values.image === "string"
-                                      ? values.image
-                                      : URL.createObjectURL(values.image)
+                                    typeof values.profile === "string"
+                                      ? values.profile
+                                      : URL.createObjectURL(values.profile)
                                   }
                                   alt="Profile preview"
                                   className="absolute inset-0 w-full h-full object-cover"
@@ -713,20 +730,21 @@ function Agent() {
                               </p>
                               <input
                                 type="file"
+                                name="profile"
                                 ref={fileInputRef}
                                 onChange={(e) => {
                                   const file = e.target.files?.[0];
                                   if (file) {
-                                    setFieldValue("image", file);
+                                    setFieldValue("profile", file);
                                   }
                                 }}
                                 accept="image/*"
                                 className="hidden"
                               />
-                              {values.image && (
+                              {values.profile && (
                                 <button
                                   type="button"
-                                  onClick={() => setFieldValue("image", "")}
+                                  onClick={() => setFieldValue("profile", "")}
                                   className="mt-3 px-3 py-1 bg-red-600/30 hover:bg-red-600/40 text-red-400 text-sm rounded-lg transition-colors flex items-center"
                                 >
                                   <svg
@@ -745,6 +763,11 @@ function Agent() {
                                   Remove photo
                                 </button>
                               )}
+                              <ErrorMessage
+                                name="profile"
+                                component="div"
+                                className="text-red-400 text-sm mt-1"
+                              />
                             </div>
                           </div>
                         </div>
@@ -839,9 +862,9 @@ function Agent() {
                         </button>
                         <button
                           type="submit"
-                          disabled={isSubmitting || !values.image}
+                          disabled={isSubmitting || !values.profile}
                           className={`px-8 py-3 rounded-lg font-medium transition-all duration-300 overflow-hidden relative group ${
-                            isSubmitting || !values.image
+                            isSubmitting || !values.profile
                               ? "bg-gray-700 cursor-not-allowed"
                               : "bg-gradient-to-r from-blue-600 to-purple-600 hover:shadow-lg hover:shadow-blue-500/20"
                           }`}
@@ -875,7 +898,7 @@ function Agent() {
                               "Complete Registration"
                             )}
                           </span>
-                          {!isSubmitting && values.image && (
+                          {!isSubmitting && values.profile && (
                             <span className="absolute inset-0 bg-gradient-to-r from-blue-400/30 via-purple-400/30 to-blue-400/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
                           )}
                         </button>
