@@ -74,7 +74,7 @@ const RecentListings = () => {
       id: 1,
       title: "Luxury Villa in Beverly Hills",
       type: "Villa",
-      price: "$2,500,000",
+      price: "$6,500",
       bedrooms: 5,
       bathrooms: 4,
       status: "Active",
@@ -84,7 +84,7 @@ const RecentListings = () => {
       id: 2,
       title: "Modern Apartment Downtown",
       type: "Apartment",
-      price: "$850,000",
+      price: "$8,500",
       bedrooms: 2,
       bathrooms: 2,
       status: "Pending",
@@ -94,7 +94,7 @@ const RecentListings = () => {
       id: 3,
       title: "Suburban Family Home",
       type: "House",
-      price: "$1,200,000",
+      price: "$7,200",
       bedrooms: 4,
       bathrooms: 3,
       status: "Active",
@@ -164,7 +164,7 @@ const TopAgents = () => {
       sales: 42,
       volume: "$12.5M",
       rating: 4.9,
-      image: "/agent1.jpg",
+      image: "/agent3.jpg",
     },
     {
       id: 2,
@@ -180,7 +180,7 @@ const TopAgents = () => {
       sales: 35,
       volume: "$9.8M",
       rating: 4.7,
-      image: "/agent3.jpg",
+      image: "/agent1.jpg",
     },
   ];
 
@@ -309,7 +309,7 @@ export default function Dashboard() {
     datasets: [
       {
         label: "Revenue ($)",
-        data: [125000, 195000, 84000, 175000],
+        data: [125, 1950, 840, 170],
         backgroundColor: "#10b981",
       },
     ],
@@ -440,7 +440,7 @@ export default function Dashboard() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="border-l-4 border-indigo-500 pl-4">
             <h4 className="text-sm font-medium text-gray-500">Median Price</h4>
-            <p className="text-2xl font-bold text-gray-800">$425,000</p>
+            <p className="text-2xl font-bold text-gray-800">$400</p>
             <p className="text-sm text-green-600">+5.2% YoY</p>
           </div>
           <div className="border-l-4 border-green-500 pl-4">

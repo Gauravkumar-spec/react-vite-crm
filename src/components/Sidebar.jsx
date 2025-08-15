@@ -110,6 +110,7 @@ export default function Sidebar() {
             </li>
           </Link>
         </ul>
+          <a href="https://storyset.com/home">Home illustrations by Storyset</a>
       </div>
 
       {/* Overlay for mobile sidebar open */}
@@ -120,6 +121,8 @@ export default function Sidebar() {
           aria-hidden="true"
         />
       )}
+    
     </>
+    
   );
 }
